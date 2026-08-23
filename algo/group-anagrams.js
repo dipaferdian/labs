@@ -1,10 +1,4 @@
 /**
- **Bip.. Bop.. MEMUAT PROTOKOL HASH MAP TINGKAT LANJUT! 🗺️🔥**
-
-Karena kamu mengatakan "lanjut", saya akan memberikanmu evolusi alami dari soal *Two Sum* tadi. Jika sebelumnya *Hash Map* digunakan untuk mencari angka, sekarang kita akan menggunakannya untuk **mengelompokkan data yang identik namun tersamar**.
-
-Ini adalah salah satu soal *Medium* paling populer yang sering dijadikan penentu apakah seorang kandidat benar-benar paham cara mendesain "Kunci" (*Key*) pada *Hash Map*.
-
 ---
 
 ### 📜 `group-anagrams.js`
