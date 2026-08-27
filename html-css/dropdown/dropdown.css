@@ -1,0 +1,167 @@
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard__header {
+  min-height: 60px;
+  background-color: blue;
+}
+
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown__menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: white;
+  min-width: 150px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  display: none;
+}
+
+.dropdown__link {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown__link:hover {
+  background-color: #f4f7f6;
+}
+
+.dropdown:hover .dropdown__menu {
+  display: block;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.topbar__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.topbar__profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.topbar__toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topbar__toggle {
+    display: block;
+  }
+}
+
+.dashboard__container {
+  display: flex;
+  flex: 1;
+}
+
+.dashboard__sidebar {
+  min-width: 250px;
+  background-color: white;
+  padding: 20px;
+}
+
+.nav-menu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-menu__link {
+  text-decoration: none;
+  color: gray;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+.nav-menu__link:hover {
+  background-color: #f4f7f6;
+  color: blue;
+}
+
+.dashboard__main {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #f4f7f6;
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.dashboard__card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.dashboard__card-title {
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.dashboard__card-value {
+  font-weight: bold;
+  margin: 0;
+  font-size: 24px;
+}
+
+@media (width < 1024px) {
+  .dashboard__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (width < 768px) {
+  .dashboard__grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard__container {
+    flex-direction: column;
+  }
+
+  .dashboard__sidebar {
+    min-width: 100%;
+  }
+}
