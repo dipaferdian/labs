@@ -1,0 +1,148 @@
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard__header {
+  min-height: 60px;
+  background-color: blue;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.topbar__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.topbar__profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.topbar__toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topbar__toggle {
+    display: block;
+  }
+}
+
+.dashboard__container {
+  display: flex;
+  flex: 1;
+}
+
+.dashboard__sidebar {
+  min-width: 250px;
+  background-color: white;
+  padding: 20px;
+}
+
+.nav-menu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-menu__link {
+  text-decoration: none;
+  color: gray;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+.nav-menu__link:hover {
+  background-color: #f4f7f6;
+  color: blue;
+}
+
+.dashboard__main {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #f4f7f6;
+}
+
+.dashboard__card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.dashboard__card-title {
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.dashboard__card-value {
+  font-weight: bold;
+  margin: 0;
+  font-size: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group__label {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group__input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: blue;
+  color: white;
+}
+
+@media (width < 1024px) {
+}
+
+@media (width < 768px) {
+}
+
+@media (max-width: 768px) {
+  .dashboard__container {
+    flex-direction: column;
+  }
+
+  .dashboard__sidebar {
+    min-width: 100%;
+  }
+}
