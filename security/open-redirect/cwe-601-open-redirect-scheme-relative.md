@@ -1,31 +1,3 @@
-Kerja bagus! Secara _konsep keamanan_, kamu telah berhasil melakukan lompatan besar dari manipulasi _String_ yang rapuh ke pemrosesan _Parser_ yang standar industri.
-
-Namun, sebagai Senior-mu, saya tidak akan meloloskan kode ini ke tahap _Production_. Mari kita lakukan _Code Review_ dan _Red Team Assessment_.
-
-### STRICT RED TEAM REVIEW: Server Crash (Denial of Service)
-
-Logika keamananmu sudah benar, TAPI implementasi kodemu akan membuat server kita _crash_ (berhenti beroperasi).
-
-1. **Fatal ReferenceError:** Kamu memanggil `res.redirect(redirectUrl);`, padahal variabel yang kamu definisikan di atas adalah `userInputUrl`. Jika saya sebagai _Red Teamer_ mengirimkan URL yang _valid_ (misal: `?next=[https://shop.alibaba.com](https://shop.alibaba.com)`), server akan error 500 dan aplikasi Node.js bisa crash karena _unhandled exception_.
-2. **Global Scope Pollution:** Kamu menulis `urlParser = new URL(...)` tanpa `const`, `let`, atau `var`. Di lingkungan JavaScript yang kompleks, ini menciptakan variabel global. Jika ada ribuan request masuk bersamaan (concurrency), variabel ini akan saling tumpuk dan menyebabkan _Race Condition_.
-
-**Mengapa Logika Keamananmu (new URL) Berhasil:**
-Kamu lupa menjawab pertanyaan saya di akhir sesi sebelumnya, jadi saya akan menjelaskannya. Mengapa serangan lama saya gagal?
-
-- Saat saya kirim: `[https://shop.alibaba.com@attacker.com](https://shop.alibaba.com@attacker.com)`
-- Parser memecahnya: `.username` = `shop.alibaba.com`, `.hostname` = `attacker.com`.
-- Pengecekanmu: `["shop.alibaba.com", ...].includes("attacker.com")` -> **FALSE**. Serangan digagalkan!
-
-- Saat saya kirim: `[https://shop.alibaba.com.attacker.com](https://shop.alibaba.com.attacker.com)`
-- Parser memecahnya: `.hostname` = `shop.alibaba.com.attacker.com`.
-- Pengecekanmu: Apakah array memiliki elemen eksak tersebut? -> **FALSE**. Serangan digagalkan!
-
----
-
-Sekarang kita masuk ke skenario dunia nyata. Di perusahaan, kita jarang hanya me-redirect user ke domain luar (seperti SSO). Sebagian besar waktu, kita me-redirect mereka ke _halaman internal_ di website yang sama setelah login (misalnya: `?next=/dashboard` atau `?next=/profile`).
-
-Mari kita buka log insiden baru.
-
 ### [INCIDENT LOG] cwe-601-open-redirect-scheme-relative.log
 
 **Skenario Serangan:**
