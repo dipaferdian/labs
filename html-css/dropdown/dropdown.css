@@ -110,12 +110,12 @@
   display: block;
   padding: 10px 15px;
   border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .nav-menu__link:hover {
   background-color: #f4f7f6;
   color: blue;
-  transition: all 0.3s ease;
 }
 
 .dashboard__main {
