@@ -26,7 +26,10 @@
   padding: 0;
   margin: 0;
   overflow: hidden;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.3s ease;
 }
 
 .dropdown__link {
@@ -41,7 +44,9 @@
 }
 
 .dropdown:hover .dropdown__menu {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .topbar {
@@ -110,6 +115,7 @@
 .nav-menu__link:hover {
   background-color: #f4f7f6;
   color: blue;
+  transition: all 0.3s ease;
 }
 
 .dashboard__main {
