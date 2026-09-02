@@ -1,38 +1,22 @@
-function compute(s, t) {
-  if (s.length != t.length) return false;
+function compute(nums, target) {
+  if (nums.length == 0) return "not found";
+  let map = new Map();
 
-  let group = new Map();
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
 
-  for (let index = 0; index < s.length; index++) {
-    const element = s[index];
+    let missingNumber = target - element;
 
-    if (group.get(element)) {
-      const getCount = group.get(element);
-      group.set(element, getCount + 1);
+    if (map.has(missingNumber)) {
+      return [map.get(missingNumber), index];
     } else {
-      group.set(element, 1);
+      map.set(element, index);
     }
   }
 
-  for (let index = 0; index < t.length; index++) {
-    const element = t[index];
-
-    if (group.get(element)) {
-      const getCount = group.get(element);
-      group.set(element, getCount - 1);
-    } else {
-      return false;
-    }
-  }
-
-  console.log(group);
-
-  return true;
+  return "not found";
 }
 
-console.log(compute("anagram", "nagaram"));
-console.log(compute("rat", "car"));
-console.log(compute("a", "ab"));
-console.log(compute("ab", "a"));
-console.log(compute("aab", "abb"));
-console.log(compute("a", "aa"));
+console.log(compute([2, 7, 11, 15], 9));
+console.log(compute([3, 2, 4], 6));
+console.log(compute([3, 3], 6));
