@@ -1,47 +1,54 @@
 **1. JUDUL SOAL & TEST CASES**
 
-**File:** `twoSum.js`
+**File:** `validParentheses.js`
 
 **Deskripsi Masalah:**
-Diberikan sebuah array bilangan bulat `nums` dan sebuah bilangan bulat `target`. Kembalikan array berisi dua indeks dari angka-angka yang jika dijumlahkan akan menghasilkan nilai `target`. Kamu dapat mengasumsikan setiap _test case_ pasti memiliki tepat satu solusi, dan kamu tidak boleh menggunakan elemen (indeks) yang sama dua kali.
+Diberikan sebuah string `s` yang hanya berisi karakter kurung: `'('`, `')'`, `'{'`, `'}'`, `'['`, dan `']'`. Tentukan apakah string input tersebut valid.
+String input dinyatakan valid jika:
+
+1. Tanda kurung buka harus ditutup oleh tanda kurung tutup dengan tipe yang sama.
+2. Tanda kurung buka harus ditutup dalam urutan yang benar (setiap tanda kurung tutup harus menutup tanda kurung buka yang paling terakhir belum ditutup).
 
 **Test Cases:**
 
 - **Test Case 1**
-- Input: `nums = [2, 7, 11, 15]`, `target = 9`
-- Output: `[0, 1]`
-- Penjelasan: Karena `nums[0] + nums[1] == 9`, kita mengembalikan array `[0, 1]`.
+- Input: `s = "()"`
+- Output: `true`
+- Penjelasan: Kurung buka bulat ditutup dengan kurung tutup bulat tepat setelahnya.
 
 - **Test Case 2**
-- Input: `nums = [3, 2, 4]`, `target = 6`
-- Output: `[1, 2]`
-- Penjelasan: `nums[1] + nums[2]` menghasilkan 6.
+- Input: `s = "()[]{}"`
+- Output: `true`
+- Penjelasan: Semua kurung dibuka dan ditutup dengan benar secara berurutan.
 
 - **Test Case 3**
-- Input: `nums = [3, 3]`, `target = 6`
-- Output: `[0, 1]`
-- Penjelasan: Menggunakan dua angka 3 yang memiliki nilai sama, namun berasal dari indeks yang berbeda.
+- Input: `s = "(]"`
+- Output: `false`
+- Penjelasan: Kurung buka bulat ditutup oleh kurung tutup siku (tipe tidak cocok).
+
+- **Test Case 4**
+- Input: `s = "([)]"`
+- Output: `false`
+- Penjelasan: Kurung siku tutup muncul sebelum kurung bulat tutup diselesaikan. Urutannya menyilang, sehingga tidak valid.
 
 **2. DAFTAR PILIHAN ALGORITMA**
 
-Berikut adalah daftar pendekatan untuk menyelesaikan masalah ini:
-
-- **Algoritma A: Brute Force (Nested Loops)**
-- Konsep: Gunakan dua perulangan bersarang. Perulangan pertama menetapkan satu angka dari array, lalu perulangan kedua berjalan maju untuk mengecek semua sisa angka di depannya untuk menemukan pasangan yang jumlahnya sama dengan `target`.
+- **Algoritma A: String Replacement**
+- Konsep: Selama string masih mengandung substring `"()"`, `"[]"`, atau `"{}"`, gantikan (replace) pasangan tersebut dengan string kosong `""`. Ulangi proses ini terus-menerus. Jika di akhir proses string menjadi kosong, maka string tersebut valid.
 - Time Complexity: O(N²)
-- Space Complexity: O(1)
-
-- **Algoritma B: Sorting & Two Pointers**
-- Konsep: Urutkan array `nums` dari terkecil ke terbesar terlebih dahulu. Pasang satu pointer di awal array dan satu di akhir. Jumlahkan nilai dari kedua pointer. Jika totalnya lebih besar dari `target`, geser pointer akhir mundur ke kiri. Jika lebih kecil, geser pointer awal maju ke kanan.
-- Time Complexity: O(N log N)
-- Space Complexity: O(1)
-
-- **Algoritma C: One-Pass Hash Map**
-- Konsep: Lakukan satu kali iterasi pada array. Pada setiap langkah iterasi, hitung nilai "kebutuhan" (yaitu `target - elemen saat ini`). Cek apakah nilai kebutuhan tersebut sudah tersimpan di dalam Hash Map. Jika sudah ada, kembalikan indeksnya. Jika belum, simpan elemen saat ini berserta indeksnya ke dalam Hash Map untuk dicocokkan pada iterasi berikutnya.
-- Time Complexity: O(N)
 - Space Complexity: O(N)
 
-- **Algoritma D: Sliding Window**
-- Konsep: Buat sebuah "jendela" ukuran fleksibel dari dua elemen pertama array berdekatan. Hitung jumlah dalam jendela tersebut. Jika lebih kecil dari `target`, perlebar jendela ke kanan. Jika lebih besar, ciutkan jendela dari sebelah kiri.
+- **Algoritma B: Two Pointers (Ujung ke Ujung)**
+- Konsep: Pasang satu pointer di awal string dan satu di akhir string. Cek apakah karakter di pointer awal adalah pasangan kurung buka yang tepat untuk kurung tutup di pointer akhir. Jika cocok, geser kedua pointer ke tengah. Jika tidak cocok, kembalikan false.
 - Time Complexity: O(N)
 - Space Complexity: O(1)
+
+- **Algoritma C: Karakter / Frequency Counter**
+- Konsep: Lakukan satu kali perulangan pada string dan hitung frekuensi setiap kurung. Gunakan variabel untuk menghitung jumlah `'('`, `')'`, `'{'`, `'}'`, `'['`, dan `']'`. Di akhir iterasi, jika jumlah `'('` sama dengan `')'`, `'['` sama dengan `']'`, dan `'{'` sama dengan `'}'`, maka string tersebut valid.
+- Time Complexity: O(N)
+- Space Complexity: O(1)
+
+- **Algoritma D: Tumpukan Berurutan (Stack)**
+- Konsep: Siapkan sebuah array kosong. Saat iterasi string, jika menemukan kurung buka, masukkan ke dalam array. Jika menemukan kurung tutup, ambil elemen paling terakhir dari array dan cocokkan. Jika tidak cocok (atau array sudah kosong padahal ada kurung tutup), maka tidak valid. Di akhir perulangan, array harus kosong.
+- Time Complexity: O(N)
+- Space Complexity: O(N)

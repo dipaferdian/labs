@@ -1,22 +1,43 @@
-function compute(nums, target) {
-  if (nums.length == 0) return "not found";
-  let map = new Map();
+function compute(s) {
+  if (s.length == 0) return false;
+  const splitParentheses = s.split("");
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
+  let openBracket = 0;
+  let closedBracket = 0;
+  let currentOpenBracket = "";
+  let currentCloseBracket = "";
 
-    let missingNumber = target - element;
+  for (let index = 0; index < splitParentheses.length; index++) {
+    const element = splitParentheses[index];
 
-    if (map.has(missingNumber)) {
-      return [map.get(missingNumber), index];
-    } else {
-      map.set(element, index);
+    if (element === "(" || element === "[" || element === "{") {
+      openBracket += 1;
+      currentOpenBracket = element;
+    }
+
+    if (element === ")" || element === "]" || element === "}") {
+      closedBracket += 1;
+      currentCloseBracket = element;
+    }
+
+    if (openBracket + closedBracket === 2) {
+      const bracket = currentOpenBracket + currentCloseBracket;
+
+      if (bracket === "()" || bracket === "{}" || bracket === "[]") {
+        currentOpenBracket = "";
+        currentCloseBracket = "";
+      } else {
+        return false;
+      }
     }
   }
 
-  return "not found";
+  if (openBracket !== closedBracket) return false;
+
+  return true;
 }
 
-console.log(compute([2, 7, 11, 15], 9));
-console.log(compute([3, 2, 4], 6));
-console.log(compute([3, 3], 6));
+console.log(compute("()"));
+console.log(compute("()[]{}"));
+console.log(compute("(]"));
+console.log(compute("((((()"));
