@@ -1,54 +1,45 @@
 **1. JUDUL SOAL & TEST CASES**
 
-**File:** `validParentheses.js`
+**File:** `maxProfit.js`
 
 **Deskripsi Masalah:**
-Diberikan sebuah string `s` yang hanya berisi karakter kurung: `'('`, `')'`, `'{'`, `'}'`, `'['`, dan `']'`. Tentukan apakah string input tersebut valid.
-String input dinyatakan valid jika:
-
-1. Tanda kurung buka harus ditutup oleh tanda kurung tutup dengan tipe yang sama.
-2. Tanda kurung buka harus ditutup dalam urutan yang benar (setiap tanda kurung tutup harus menutup tanda kurung buka yang paling terakhir belum ditutup).
+Diberikan sebuah array `prices` di mana elemen `prices[i]` merepresentasikan harga sebuah saham pada hari ke-`i`. Tugasmu adalah memaksimalkan keuntungan dengan memilih satu hari untuk membeli saham dan satu hari lain di masa depan untuk menjual saham tersebut. Kembalikan nilai keuntungan maksimal yang bisa diraih. Jika tidak ada keuntungan yang bisa didapatkan (harga selalu turun), kembalikan `0`.
 
 **Test Cases:**
 
 - **Test Case 1**
-- Input: `s = "()"`
-- Output: `true`
-- Penjelasan: Kurung buka bulat ditutup dengan kurung tutup bulat tepat setelahnya.
+- Input: `prices = [7, 1, 5, 3, 6, 4]`
+- Output: `5`
+- Penjelasan: Beli pada hari ke-2 (harga = 1) dan jual pada hari ke-5 (harga = 6). Keuntungan = 6 - 1 = 5.
 
 - **Test Case 2**
-- Input: `s = "()[]{}"`
-- Output: `true`
-- Penjelasan: Semua kurung dibuka dan ditutup dengan benar secara berurutan.
+- Input: `prices = [7, 6, 4, 3, 1]`
+- Output: `0`
+- Penjelasan: Harga saham terus turun setiap hari. Transaksi tidak dilakukan sama sekali, keuntungan 0.
 
 - **Test Case 3**
-- Input: `s = "(]"`
-- Output: `false`
-- Penjelasan: Kurung buka bulat ditutup oleh kurung tutup siku (tipe tidak cocok).
-
-- **Test Case 4**
-- Input: `s = "([)]"`
-- Output: `false`
-- Penjelasan: Kurung siku tutup muncul sebelum kurung bulat tutup diselesaikan. Urutannya menyilang, sehingga tidak valid.
+- Input: `prices = [2, 4, 1]`
+- Output: `2`
+- Penjelasan: Beli di harga 2 dan jual di harga 4 (untung 2). Meskipun ada harga terendah 1 di akhir array, tidak ada hari esok untuk menjualnya.
 
 **2. DAFTAR PILIHAN ALGORITMA**
 
-- **Algoritma A: String Replacement**
-- Konsep: Selama string masih mengandung substring `"()"`, `"[]"`, atau `"{}"`, gantikan (replace) pasangan tersebut dengan string kosong `""`. Ulangi proses ini terus-menerus. Jika di akhir proses string menjadi kosong, maka string tersebut valid.
+- **Algoritma A: Future Checking (Brute Force)**
+- Konsep: Gunakan dua perulangan bersarang. Perulangan pertama (`i`) memilih hari untuk membeli. Perulangan kedua (`j = i + 1`) mengecek semua hari di masa depan untuk mencari harga jual. Catat selisih tertingginya.
 - Time Complexity: O(N²)
+- Space Complexity: O(1)
+
+- **Algoritma B: Sort and Subtract**
+- Konsep: Lakukan duplikasi pada array, lalu urutkan array duplikat tersebut dari nilai terkecil hingga terbesar. Ambil nilai paling awal (terkecil) sebagai harga beli dan nilai paling akhir (terbesar) sebagai harga jual. Kembalikan selisih keduanya.
+- Time Complexity: O(N log N)
 - Space Complexity: O(N)
 
-- **Algoritma B: Two Pointers (Ujung ke Ujung)**
-- Konsep: Pasang satu pointer di awal string dan satu di akhir string. Cek apakah karakter di pointer awal adalah pasangan kurung buka yang tepat untuk kurung tutup di pointer akhir. Jika cocok, geser kedua pointer ke tengah. Jika tidak cocok, kembalikan false.
+- **Algoritma C: Track Min & Max Separately**
+- Konsep: Lakukan dua kali iterasi terpisah. Iterasi pertama mencari nilai harga paling rendah di seluruh array. Iterasi kedua mencari nilai harga paling tinggi di seluruh array. Kurangi nilai tertinggi dengan nilai terendah untuk mendapatkan keuntungan maksimal.
 - Time Complexity: O(N)
 - Space Complexity: O(1)
 
-- **Algoritma C: Karakter / Frequency Counter**
-- Konsep: Lakukan satu kali perulangan pada string dan hitung frekuensi setiap kurung. Gunakan variabel untuk menghitung jumlah `'('`, `')'`, `'{'`, `'}'`, `'['`, dan `']'`. Di akhir iterasi, jika jumlah `'('` sama dengan `')'`, `'['` sama dengan `']'`, dan `'{'` sama dengan `'}'`, maka string tersebut valid.
+- **Algoritma D: Dynamic Sliding Pointer**
+- Konsep: Sediakan satu variabel untuk mencatat harga beli terendah sejauh ini (inisialisasi dengan tak terhingga), dan satu variabel untuk keuntungan maksimal (inisialisasi dengan 0). Lakukan satu kali iterasi pada array. Jika harga hari ini lebih rendah dari harga beli terendah, perbarui harga beli terendah. Jika tidak, hitung potensi keuntungan (harga hari ini dikurangi harga beli terendah) dan perbarui keuntungan maksimal jika hasilnya lebih besar.
 - Time Complexity: O(N)
 - Space Complexity: O(1)
-
-- **Algoritma D: Tumpukan Berurutan (Stack)**
-- Konsep: Siapkan sebuah array kosong. Saat iterasi string, jika menemukan kurung buka, masukkan ke dalam array. Jika menemukan kurung tutup, ambil elemen paling terakhir dari array dan cocokkan. Jika tidak cocok (atau array sudah kosong padahal ada kurung tutup), maka tidak valid. Di akhir perulangan, array harus kosong.
-- Time Complexity: O(N)
-- Space Complexity: O(N)

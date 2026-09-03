@@ -1,28 +1,21 @@
-function compute(s) {
-  if (s.length == 0) return false;
-  const splitParentheses = [];
+function compute(prices) {
+  let minPrice = Infinity;
+  let maxProfit = 0;
 
-  for (let index = 0; index < s.length; index++) {
-    const element = s[index];
+  for (let index = 0; index < prices.length; index++) {
+    const element = prices[index];
 
-    if (element === "(" || element === "{" || element === "[") {
-      splitParentheses.push(element);
-    }
-
-    if (element === ")" || element === "}" || element === "]") {
-      const bracket = splitParentheses.pop() + element;
-
-      if (bracket !== "()" && bracket !== "{}" && bracket !== "[]") {
-        return false;
-      }
+    if (element < minPrice) {
+      minPrice = element;
+    } else {
+      maxProfit = Math.max(maxProfit, element - minPrice);
     }
   }
 
-  return splitParentheses.length == 0;
+  return maxProfit;
 }
 
-console.log(compute("()"));
-console.log(compute("()[]{}"));
-console.log(compute("(]"));
-console.log(compute("((((()"));
-console.log(compute("(())"));
+console.log(compute([7, 1, 5, 3, 6, 4]));
+console.log(compute([7, 6, 4, 3, 1]));
+console.log(compute([2, 1, 4]));
+console.log(compute([2, 4, 1]));
