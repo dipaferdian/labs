@@ -1,43 +1,28 @@
 function compute(s) {
   if (s.length == 0) return false;
-  const splitParentheses = s.split("");
+  const splitParentheses = [];
 
-  let openBracket = 0;
-  let closedBracket = 0;
-  let currentOpenBracket = "";
-  let currentCloseBracket = "";
+  for (let index = 0; index < s.length; index++) {
+    const element = s[index];
 
-  for (let index = 0; index < splitParentheses.length; index++) {
-    const element = splitParentheses[index];
-
-    if (element === "(" || element === "[" || element === "{") {
-      openBracket += 1;
-      currentOpenBracket = element;
+    if (element === "(" || element === "{" || element === "[") {
+      splitParentheses.push(element);
     }
 
-    if (element === ")" || element === "]" || element === "}") {
-      closedBracket += 1;
-      currentCloseBracket = element;
-    }
+    if (element === ")" || element === "}" || element === "]") {
+      const bracket = splitParentheses.pop() + element;
 
-    if (openBracket + closedBracket === 2) {
-      const bracket = currentOpenBracket + currentCloseBracket;
-
-      if (bracket === "()" || bracket === "{}" || bracket === "[]") {
-        currentOpenBracket = "";
-        currentCloseBracket = "";
-      } else {
+      if (bracket !== "()" && bracket !== "{}" && bracket !== "[]") {
         return false;
       }
     }
   }
 
-  if (openBracket !== closedBracket) return false;
-
-  return true;
+  return splitParentheses.length == 0;
 }
 
 console.log(compute("()"));
 console.log(compute("()[]{}"));
 console.log(compute("(]"));
 console.log(compute("((((()"));
+console.log(compute("(())"));
