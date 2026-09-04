@@ -1,21 +1,21 @@
-function compute(prices) {
-  let minPrice = Infinity;
-  let maxProfit = 0;
+function compute(s = "") {
+  const clenWord = s.replace(/[^a-zA-Z]/g, "").toLocaleLowerCase();
 
-  for (let index = 0; index < prices.length; index++) {
-    const element = prices[index];
+  if (clenWord == "") return true;
 
-    if (element < minPrice) {
-      minPrice = element;
-    } else {
-      maxProfit = Math.max(maxProfit, element - minPrice);
-    }
+  let leftPointer = 0;
+  let rightPointer = clenWord.length - 1;
+
+  while (leftPointer < rightPointer) {
+    if (clenWord[leftPointer] != clenWord[rightPointer]) return false;
+
+    leftPointer++;
+    rightPointer--;
   }
 
-  return maxProfit;
+  return true;
 }
 
-console.log(compute([7, 1, 5, 3, 6, 4]));
-console.log(compute([7, 6, 4, 3, 1]));
-console.log(compute([2, 1, 4]));
-console.log(compute([2, 4, 1]));
+console.log(compute("A man, a plan, a canal: Panama"));
+console.log(compute("race a car"));
+console.log(compute(" "));
