@@ -1,21 +1,24 @@
-function compute(s = "") {
-  const clenWord = s.replace(/[^a-zA-Z]/g, "").toLocaleLowerCase();
+function compute(nums) {
+  let currentSum = 0;
+  let maxSum = -Infinity;
 
-  if (clenWord == "") return true;
+  for (let right = 0; right < nums.length; right++) {
+    currentSum += nums[right];
+    const currentNumber = nums[right];
 
-  let leftPointer = 0;
-  let rightPointer = clenWord.length - 1;
+    if (currentNumber > currentSum) {
+      currentSum = currentNumber;
+    }
 
-  while (leftPointer < rightPointer) {
-    if (clenWord[leftPointer] != clenWord[rightPointer]) return false;
-
-    leftPointer++;
-    rightPointer--;
+    maxSum = Math.max(maxSum, currentSum);
   }
 
-  return true;
+  return maxSum;
 }
 
-console.log(compute("A man, a plan, a canal: Panama"));
-console.log(compute("race a car"));
-console.log(compute(" "));
+console.log(compute([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+console.log(compute([5, 2, -1, 0, 3]));
+console.log(compute([1]));
+console.log(compute([5, -1, 8]));
+console.log(compute([-2, 1, -3, 4]));
+console.log(compute([-2, -1]));
