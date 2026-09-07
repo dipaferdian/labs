@@ -1,34 +1,17 @@
-function compute(s, t) {
-  if (s.length != t.length) return false;
-  let map = new Map();
-  for (let index = 0; index < s.length; index++) {
-    const element = s[index];
+function compute(s) {
+  let left = 0;
+  let right = s.length - 1;
 
-    if (map.has(element)) {
-      const count = map.get(element) + 1;
-      map.set(element, count);
-    } else {
-      map.set(element, 1);
-    }
+  while (left < right) {
+    const temporary = s[right];
+    s[right] = s[left];
+    s[left] = temporary;
+
+    left++;
+    right--;
   }
 
-  for (let index = 0; index < t.length; index++) {
-    const element = t[index];
-
-    if (map.get(element) >= 1) {
-      const decrement = map.get(element) - 1;
-
-      map.set(element, decrement);
-    } else {
-      return false;
-    }
-  }
-
-  return true;
+  return s;
 }
 
-console.log(compute("anagram", "nagaram"));
-console.log(compute("a", "aa"));
-console.log(compute("a", "ab"));
-console.log(compute("rat", "car"));
-console.log(compute("ab", "a"));
+console.log(compute(["h", "e", "l", "l", "o"]));
