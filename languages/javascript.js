@@ -1,17 +1,17 @@
-function compute(s) {
-  let left = 0;
-  let right = s.length - 1;
+function compute(nums, target) {
+  let slow = 0;
 
-  while (left < right) {
-    const temporary = s[right];
-    s[right] = s[left];
-    s[left] = temporary;
+  for (let fast = 0; fast < nums.length; fast++) {
+    const element = nums[fast];
 
-    left++;
-    right--;
+    if (element != target) {
+      nums[slow] = nums[fast];
+
+      slow++;
+    }
   }
 
-  return s;
+  return slow;
 }
 
-console.log(compute(["h", "e", "l", "l", "o"]));
+console.log(compute([3, 2, 2, 3], 3));
