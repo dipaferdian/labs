@@ -1,34 +1,16 @@
-function compute(s, t) {
-  if (s.length != t.length) return false;
+function compute(s) {
+  let left = 0;
+  let right = s.length - 1;
 
-  let map = new Map();
+  while (left < right) {
+    if (s[left] != s[right]) return false;
 
-  for (let index = 0; index < s.length; index++) {
-    const element = s[index];
-
-    if (map.has(element)) {
-      const count = map.get(element) + 1;
-      map.set(element, count);
-    } else {
-      map.set(element, 1);
-    }
+    left++;
+    right--;
   }
 
-  for (let index = 0; index < t.length; index++) {
-    const element = t[index];
-
-    if (map.has(element)) {
-      map.set(element, map.get(element) - 1);
-    }
-
-    if (map.get(element) === 0) {
-      map.delete(element);
-    }
-  }
-
-  return map.size === 0;
+  return true;
 }
 
-console.log(compute("listen", "silent"));
-console.log(compute("hello", "world"));
-console.log(compute("aab", "abb"));
+console.log(compute("katak"));
+console.log(compute("mobil"));
