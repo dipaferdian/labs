@@ -1,20 +1,34 @@
-function compute(nums, target) {
+function compute(s, t) {
+  if (s.length != t.length) return false;
+
   let map = new Map();
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
+  for (let index = 0; index < s.length; index++) {
+    const element = s[index];
 
-    const missingNumber = target - element;
-
-    if (map.has(missingNumber)) {
-      return [map.get(missingNumber), index];
+    if (map.has(element)) {
+      const count = map.get(element) + 1;
+      map.set(element, count);
     } else {
-      map.set(element, index);
+      map.set(element, 1);
     }
   }
 
-  return null;
+  for (let index = 0; index < t.length; index++) {
+    const element = t[index];
+
+    if (map.has(element)) {
+      map.set(element, map.get(element) - 1);
+    }
+
+    if (map.get(element) === 0) {
+      map.delete(element);
+    }
+  }
+
+  return map.size === 0;
 }
 
-console.log(compute([2, 7, 11, 15], 9));
-console.log(compute([5], 5));
+console.log(compute("listen", "silent"));
+console.log(compute("hello", "world"));
+console.log(compute("aab", "abb"));
