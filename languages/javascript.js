@@ -1,17 +1,16 @@
-function compute(nums, target) {
-  let slow = 0;
+function compute(s) {
+  let left = 0;
+  let right = s.length - 1;
 
-  for (let fast = 0; fast < nums.length; fast++) {
-    const element = nums[fast];
+  while (left < right) {
+    if (s[left] != s[right]) return false;
 
-    if (element != target) {
-      nums[slow] = nums[fast];
-
-      slow++;
-    }
+    left++;
+    right--;
   }
 
-  return slow;
+  return true;
 }
 
-console.log(compute([3, 2, 2, 3], 3));
+console.log(compute("racecar"));
+console.log(compute("motor"));
