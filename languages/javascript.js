@@ -1,27 +1,16 @@
-function compute(s) {
-  let left = 0;
-  let right = s.length - 1;
+function compute(nums) {
+  let min = Infinity;
 
-  while (left < right) {
-    while (left < right && !/^[A-Za-z0-9]$/.test(s[left])) {
-      left++;
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
+
+    if (element < min) {
+      min = element;
     }
-
-    while (left < right && !/^[A-Za-z0-9]$/.test(s[right])) {
-      right--;
-    }
-
-    if (s[left].toLowerCase() != s[right].toLowerCase()) return false;
-
-    left++;
-    right--;
   }
 
-  return true;
+  return min;
 }
 
-console.log(compute("kaTak"));
-console.log(compute("race a car"));
-console.log(compute("motor"));
-console.log(compute("1a2"));
-console.log(compute("a....................a"));
+console.log(compute([7, 3, 9, 2, 8, 4]));
+console.log(compute([-1, -5, -2, -10]));
