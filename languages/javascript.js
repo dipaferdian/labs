@@ -1,26 +1,31 @@
-function compute(s) {
+function compute(nums, k) {
   let left = 0;
   let right = 0;
+  let windowSum = 0;
   let maxLength = 0;
-  let set = new Set();
 
-  while (right < s.length) {
-    while (set.has(s[right])) {
-      set.delete(s[left]);
+  while (right < nums.length) {
+    windowSum += nums[right];
+
+    while (windowSum > k) {
+      windowSum -= nums[left];
+
       left++;
     }
 
-    set.add(s[right]);
-    right++;
+    if (windowSum <= k) {
+      maxLength = Math.max(maxLength, right - left + 1);
+    }
 
-    maxLength = Math.max(maxLength, right - left);
+    right++;
   }
 
-  return maxLength;
+  return console.log(maxLength);
 }
 
-console.log(compute("abcabcbb"));
-console.log(compute("bbbbb"));
-console.log(compute("pwwzkew"));
-console.log(compute(""));
-console.log(compute("a"));
+compute([2, 1, 3, 2, 1], 5); // ?
+compute([1, 1, 1, 1], 2); // ?
+compute([5, 1, 1, 1], 5); // ?
+compute([1, 2, 3, 4], 3); // ?
+compute([10], 5); // ?
+compute([], 5); // ?
