@@ -1,10 +1,11 @@
-function compute(nums, target) {
+function compute(nums) {
   let count = 0;
+  const minimunNumber = 0;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    if (target === element) {
+    if (element > 0) {
       count++;
     }
   }
@@ -12,14 +13,17 @@ function compute(nums, target) {
   return console.log(count);
 }
 
-compute([2, 5, 2, 8, 2, 5], 2);
+compute([3, -2, 5, -8, 10, 0, -1]);
 // 3
 
-compute([1, 1, 1, 1], 1);
-// 4
-
-compute([1, 2, 3, 4], 5);
+compute([-5, -2, -1]);
 // 0
 
-compute([7], 7);
+compute([1, 2, 3, 4]);
+// 4
+
+compute([0, 0, -1]);
+// 0
+
+compute([7]);
 // 1
