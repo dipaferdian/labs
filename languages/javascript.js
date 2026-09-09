@@ -1,31 +1,25 @@
-function compute(nums, k) {
-  let left = 0;
-  let right = 0;
-  let windowSum = 0;
-  let maxLength = 0;
+function compute(nums) {
+  let maxNumber = -Infinity;
 
-  while (right < nums.length) {
-    windowSum += nums[right];
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
 
-    while (windowSum > k) {
-      windowSum -= nums[left];
-
-      left++;
+    if (element > maxNumber) {
+      maxNumber = element;
     }
-
-    if (windowSum <= k) {
-      maxLength = Math.max(maxLength, right - left + 1);
-    }
-
-    right++;
   }
 
-  return console.log(maxLength);
+  return console.log(maxNumber);
 }
 
-compute([2, 1, 3, 2, 1], 5); // ?
-compute([1, 1, 1, 1], 2); // ?
-compute([5, 1, 1, 1], 5); // ?
-compute([1, 2, 3, 4], 3); // ?
-compute([10], 5); // ?
-compute([], 5); // ?
+compute([3, 7, 2, 9, 5]);
+// 9
+
+compute([10, 3, 25, 7, 2]);
+// 25
+
+compute([-5, -2, -10, -1]);
+// -1
+
+compute([7]);
+// 7
