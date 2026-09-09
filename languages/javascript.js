@@ -1,25 +1,25 @@
 function compute(nums) {
-  let maxNumber = -Infinity;
+  let minNumber = Infinity;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    if (element > maxNumber) {
-      maxNumber = element;
+    if (element < minNumber) {
+      minNumber = element;
     }
   }
 
-  return console.log(maxNumber);
+  return console.log(minNumber);
 }
 
-compute([3, 7, 2, 9, 5]);
-// 9
+compute([8, 3, 10, 2, 6]);
+// 2
 
-compute([10, 3, 25, 7, 2]);
+compute([5]);
+// 5
+
+compute([-3, -10, -2, -7]);
+// -10
+
+compute([100, 50, 25, 75]);
 // 25
-
-compute([-5, -2, -10, -1]);
-// -1
-
-compute([7]);
-// 7
