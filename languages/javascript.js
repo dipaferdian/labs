@@ -1,21 +1,20 @@
 function compute(nums) {
-  let set = new Set();
+  let map = new Map();
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    if (set.has(element)) {
-      return console.log(true);
+    if (map.has(element)) {
+      const count = map.get(element) + 1;
+
+      map.set(element, count);
     } else {
-      set.add(element);
+      map.set(element, 1);
     }
   }
 
-  return console.log(false);
+  return map;
 }
 
 compute([1, 2, 3, 4]);
-// false
-
 compute([1, 2, 3, 2]);
-// true
