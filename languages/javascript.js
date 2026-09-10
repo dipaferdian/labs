@@ -1,27 +1,21 @@
-function compute(nums, target) {
+function compute(nums) {
   let set = new Set();
 
-  for (let i = 0; i < nums.length; i++) {
-    if (set.has(target - nums[i])) {
-      return console.log(true);
-    }
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
 
-    set.add(nums[i]);
+    if (set.has(element)) {
+      return console.log(true);
+    } else {
+      set.add(element);
+    }
   }
 
   return console.log(false);
 }
-compute([2, 7, 11, 15], 9);
-// true
 
-compute([2, 7, 11, 15], 20);
+compute([1, 2, 3, 4]);
 // false
 
-compute([3, 3], 6);
+compute([1, 2, 3, 2]);
 // true
-
-compute([1, 2, 3, 4], 8);
-// false
-
-compute([10, -2, 5, 7], 8);
-// // true
