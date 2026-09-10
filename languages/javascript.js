@@ -13,8 +13,13 @@ function compute(nums) {
     }
   }
 
-  return map;
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
+
+    if (map.get(element) === 1) {
+      return element;
+    }
+  }
 }
 
-compute([1, 2, 3, 4]);
-compute([1, 2, 3, 2]);
+console.log(compute([1, 2, 3, 4, 1]));
