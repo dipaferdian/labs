@@ -1,23 +1,31 @@
 function compute(nums) {
-  let maxNumber = -Infinity;
+  let sum = 0;
+  const target = 8;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    maxNumber = Math.max(maxNumber, element);
+    if (element % 2 === 0) {
+      if (element > target) {
+        sum += element;
+      }
+    }
   }
 
-  return console.log(maxNumber);
+  return console.log(sum);
 }
 
-compute([10, 3, 7, 2, 15, 6]);
-// 15
+compute([4, 7, 10, 13, 16, 21, 25]);
+// 26
 
-compute([-5, -2, -10]);
-// -2
+compute([2, 4, 6]);
+// 0
 
-compute([-5, 3, -10, 2]);
-// 3
+compute([10, 12, 14]);
+// 36
 
-compute([7]);
-// 7
+compute([3, 5, 7]);
+// 0
+
+compute([-10, -8, 4, 10]);
+// 10
