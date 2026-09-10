@@ -1,29 +1,31 @@
 function compute(nums) {
-  let count = 0;
-  const minimunNumber = 0;
+  let sum = 0;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
     if (element > 0) {
-      count++;
+      sum += element;
     }
   }
 
-  return console.log(count);
+  return console.log(sum);
 }
 
-compute([3, -2, 5, -8, 10, 0, -1]);
-// 3
+compute([4, -2, 7, 10, -5, 3]);
+// 24
 
 compute([-5, -2, -1]);
 // 0
 
-compute([1, 2, 3, 4]);
-// 4
+compute([1, 2, 3]);
+// 6
 
-compute([0, 0, -1]);
-// 0
+compute([0, -1, 5]);
+// 5
+
+compute([-10, 0, 10]);
+// 10
 
 compute([7]);
-// 1
+// 7
