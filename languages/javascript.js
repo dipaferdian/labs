@@ -1,31 +1,27 @@
-function compute(nums) {
-  let sum = 0;
-  const target = 8;
+function compute(nums, target) {
+  let set = new Set();
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
-
-    if (element % 2 === 0) {
-      if (element > target) {
-        sum += element;
-      }
+  for (let i = 0; i < nums.length; i++) {
+    if (set.has(target - nums[i])) {
+      return console.log(true);
     }
+
+    set.add(nums[i]);
   }
 
-  return console.log(sum);
+  return console.log(false);
 }
+compute([2, 7, 11, 15], 9);
+// true
 
-compute([4, 7, 10, 13, 16, 21, 25]);
-// 26
+compute([2, 7, 11, 15], 20);
+// false
 
-compute([2, 4, 6]);
-// 0
+compute([3, 3], 6);
+// true
 
-compute([10, 12, 14]);
-// 36
+compute([1, 2, 3, 4], 8);
+// false
 
-compute([3, 5, 7]);
-// 0
-
-compute([-10, -8, 4, 10]);
-// 10
+compute([10, -2, 5, 7], 8);
+// // true
