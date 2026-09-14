@@ -1,31 +1,39 @@
-function compute(nums) {
-  let map = new Map();
+// solution
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
+function compute1(nums, nums2) {
+  for (let i = 0; i < nums.length; i++) {
+    const element = nums[i];
+    for (let j = 0; j < nums2.length; j++) {
+      const element2 = nums2[j];
 
-    if (map.has(element)) {
-      const count = map.get(element) + 1;
-
-      map.set(element, count);
-    } else {
-      map.set(element, 1);
+      if (element === element2) return true;
     }
   }
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
-
-    if (map.get(element) === 1) {
-      return element;
-    }
-  }
-
-  return null;
+  return false;
 }
 
-console.log(compute([4, 5, 1, 2, 1, 4]));
+// console.log(compute1([1, 2, 3, 4], [10, 20, 11]));
 
-console.log(compute([1, 2, 2, 3, 1, 4]));
+// console.log(compute1([1, 2, 3, 4], [10, 1, 11]));
 
-console.log(compute([1, 1, 2, 2]));
+// optimize
+function compute2(nums, nums2) {
+  let set = new Set();
+
+  for (const num of nums2) {
+    set.add(num);
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    const element = nums[i];
+
+    if (set.has(element)) return true;
+  }
+
+  return false;
+}
+
+console.log(compute2([1, 2, 3, 4], [10, 20, 11]));
+
+console.log(compute2([1, 2, 3, 4], [10, 1, 11]));
