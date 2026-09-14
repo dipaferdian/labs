@@ -1,39 +1,20 @@
 function compute(nums) {
-  let map = new Map();
-  let maxCount = -Infinity;
-  let result = null;
+  let set = new Set();
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    if (map.has(element)) {
-      const count = map.get(element) + 1;
-
-      map.set(element, count);
-
-      if (count > maxCount) {
-        maxCount = count;
-        result = element;
-      }
-
-      maxCount = Math.max(maxCount, count);
+    if (set.has(element)) {
+      return element;
     } else {
-      map.set(element, 1);
-
-      maxCount = Math.max(maxCount, 1);
+      set.add(element);
     }
   }
 
-  return result;
+  return null;
 }
 
-console.log(compute([1, 2, 2, 3, 1, 2]));
+console.log(compute([2, 5, 1, 2, 3, 5]));
 // 2
 
-console.log(compute([5, 5, 1, 1, 1, 3]));
-// 1
-
-console.log(compute([7, 4, 7, 4]));
-// 7
-
-console.log(compute([1, 1]));
+console.log(compute([1, 2, 3, 4]));
