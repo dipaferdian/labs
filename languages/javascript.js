@@ -1,39 +1,50 @@
-// solution
+function compute(nums, nums2) {
+  let map = new Map();
 
-function compute1(nums, nums2) {
-  for (let i = 0; i < nums.length; i++) {
-    const element = nums[i];
-    for (let j = 0; j < nums2.length; j++) {
-      const element2 = nums2[j];
+  for (const element of nums) {
+    if (map.has(element)) {
+      const count = map.get(element) + 1;
 
-      if (element === element2) return true;
+      map.set(element, count);
+    } else {
+      map.set(element, 1);
     }
   }
 
-  return false;
-}
+  for (let index = 0; index < nums2.length; index++) {
+    const element = nums2[index];
 
-// console.log(compute1([1, 2, 3, 4], [10, 20, 11]));
+    if (map.has(element)) {
+      const count = map.get(element);
 
-// console.log(compute1([1, 2, 3, 4], [10, 1, 11]));
-
-// optimize
-function compute2(nums, nums2) {
-  let set = new Set();
-
-  for (const num of nums2) {
-    set.add(num);
+      map.set(element, count - 1);
+    }
   }
 
-  for (let i = 0; i < nums.length; i++) {
-    const element = nums[i];
-
-    if (set.has(element)) return true;
+  for (const [key, value] of map) {
+    if (value >= 1) return false;
   }
 
-  return false;
+  return true;
 }
 
-console.log(compute2([1, 2, 3, 4], [10, 20, 11]));
+console.log(compute([1, 2, 3, 1], [3, 2, 1, 1]));
+// true
 
-console.log(compute2([1, 2, 3, 4], [10, 1, 11]));
+console.log(compute([1, 2, 3], [1, 2]));
+// false
+
+console.log(compute([1, 2, 3], [1, 2, 4]));
+// false
+
+console.log(compute([1, 2, 2, 3], [1, 2, 3, 3]));
+// false
+
+/*
+- kembalikan false jika jumlah nums dengan nums2 tidak sama
+- lakukan iterasi di nums
+- simpan setiap iterasi dengan jumlah kemunculan pada element yang sama
+- lakukan iterasi di nums2
+- cek apakah ada element nya dan jumlah nya sama
+- ambil yang jumlah count nya tidak habis sampai 0
+*/
