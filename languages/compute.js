@@ -1,14 +1,19 @@
 function compute(nums) {
+  let max = 0;
+  let currentElement = null;
   let count = 0;
-  let max = -Infinity;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    count += element;
+    if (currentElement === element && currentElement != 0) {
+      count += 1;
+    } else {
+      currentElement = element;
 
-    if (count < element) {
-      count = element;
+      if (currentElement != 0) {
+        count = 1;
+      }
     }
 
     max = Math.max(max, count);
@@ -17,11 +22,16 @@ function compute(nums) {
   return max;
 }
 
-console.log(compute([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+console.log(compute([1, 1, 0, 1, 1, 1, 0])); // 3
 
-console.log(compute([4, -1, 2, 1]));
+console.log(compute([1, 0, 1, 1, 0, 1])); // 2
 
-/*
- jumlahkan setiap element, jika element berikut nya lebih besar maka ganti dengan element yang sekarang
- jika ada element yang sama maka lewatkan
-*/
+console.log(compute([0, 0, 0])); // 0
+
+console.log(compute([1, 1, 1, 1])); // 4
+
+console.log(compute([0, 1, 1, 0, 1])); // 2
+
+console.log(compute([1])); // 1
+
+console.log(compute([0])); // 0
