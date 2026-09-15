@@ -1,32 +1,27 @@
 function compute(nums) {
-  let left = 0;
-  let right = 1;
-  let buy = Infinity;
-  let profit = 0;
+  let count = 0;
+  let max = -Infinity;
 
-  while (right < nums.length) {
-    const stockToday = nums[left];
-    const stockTommorow = nums[right];
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
 
-    buy = Math.min(buy, stockToday);
+    count += element;
 
-    profit = Math.max(profit, stockTommorow - buy);
+    if (count < element) {
+      count = element;
+    }
 
-    left++;
-    right++;
+    max = Math.max(max, count);
   }
 
-  return profit;
+  return max;
 }
 
-console.log(compute([7, 1, 5, 3, 6, 4]));
+console.log(compute([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
 
-console.log(compute([7, 6, 4, 3, 1]));
-
-console.log(compute([2, 4, 1, 7]));
+console.log(compute([4, -1, 2, 1]));
 
 /*
-
-simpan harga termurah, jika ada harga termurah berikutnya maka simpan harga tersebut
-kemudian cari maksimal profit dari harga termurah dengan harga hari ini
+ jumlahkan setiap element, jika element berikut nya lebih besar maka ganti dengan element yang sekarang
+ jika ada element yang sama maka lewatkan
 */
