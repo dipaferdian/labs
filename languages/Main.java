@@ -1,7 +1,10 @@
 public class Main {
     public static void main(String[] args) {
     
-     String ownerName = "Dipa";
-     System.out.println(ownerName);
+        int age = 20;
+
+        
+
+        System.out.println(age);
     }
 }

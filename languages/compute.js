@@ -1,38 +1,32 @@
-function compute(nums, target) {
-  let map = new Map();
+function compute(nums) {
+  let left = 0;
+  let right = 1;
+  let buy = Infinity;
+  let profit = 0;
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
+  while (right < nums.length) {
+    const stockToday = nums[left];
+    const stockTommorow = nums[right];
 
-    let needNumber = target - element;
+    buy = Math.min(buy, stockToday);
 
-    if (map.has(needNumber)) {
-      return [index, map.get(needNumber)];
-    } else {
-      map.set(element, index);
-    }
+    profit = Math.max(profit, stockTommorow - buy);
 
-    console.log(map);
+    left++;
+    right++;
   }
 
-  return null;
+  return profit;
 }
 
-console.log(compute([1, 2, 3], 3));
+console.log(compute([7, 1, 5, 3, 6, 4]));
+
+console.log(compute([7, 6, 4, 3, 1]));
+
+console.log(compute([2, 4, 1, 7]));
 
 /*
 
-target = 3
-array = [1,2,3]
-
-angka yang dicari = target - 1
-cari berdasarkan angka yang dicari di map
-jika tidak ada, maka simpan element saat ini, dan index nya
-
-angka yang dicari = target - 2
-cari berdasarkan angka yang dicari di map
-jika ditemukan, maka return index sekarang dan index dari map berdasarkan angka yang dicari
-
-jika tidak ada angka yang dicari maka return null
-
+simpan harga termurah, jika ada harga termurah berikutnya maka simpan harga tersebut
+kemudian cari maksimal profit dari harga termurah dengan harga hari ini
 */
