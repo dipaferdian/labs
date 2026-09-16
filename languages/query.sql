@@ -39,3 +39,6 @@ where balance >= 2000000
 
 SELECT avg(balance) from accounts
 where balance >= 2000000
+
+select min(balance) as min_balance, max(balance) as max_balance from accounts
+where balance >= 2000000
