@@ -33,3 +33,6 @@ Order by balance desc
 
 SELECT COUNT(*) from accounts
 where balance >= 2000000
+
+SELECT Sum(balance) from accounts
+where balance >= 2000000
