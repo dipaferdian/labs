@@ -26,3 +26,7 @@ WHERE accounts.balance > 2000000 and (
     accounts.customer_name LIKE '%A%'
     OR accounts.customer_name LIKE '%C%'
   );
+
+SELECT * FROM accounts
+Where balance >= 2000000
+Order by balance desc
