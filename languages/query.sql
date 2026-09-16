@@ -30,3 +30,6 @@ WHERE accounts.balance > 2000000 and (
 SELECT * FROM accounts
 Where balance >= 2000000
 Order by balance desc
+
+SELECT COUNT(*) from accounts
+where balance >= 2000000
