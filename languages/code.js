@@ -1,4 +1,4 @@
-function compute(nums) {
+function code(nums) {
   let max = 0;
   let currentElement = -Infinity;
   let count = 0;
