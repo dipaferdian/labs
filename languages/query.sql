@@ -1,0 +1,22 @@
+-- Active: 1786503636234@@127.0.0.1@5432@test
+-- CREATE TABLE accounts (
+--     id INT PRIMARY KEY,
+--     customer_name VARCHAR(100) NOT NULL,
+--     balance DECIMAL(15, 2) NOT NULL
+-- );
+
+-- INSERT INTO accounts (id, customer_name, balance) VALUES
+-- (1, 'Andi', 5000000),
+-- (2, 'Budi', 1500000),
+-- (3, 'Citra', 8000000),
+-- (4, 'Dedi', 300000),
+-- (5, 'Eka', 2500000),
+-- (6, 'Fajar', 1200000),
+-- (7, 'Gina', 4500000),
+-- (8, 'Hendra', 750000),
+-- (9, 'Indah', 10000000),
+-- (10, 'Joko', 2000000);
+
+
+SELECT * FROM accounts
+Where accounts.balance > 2000000
