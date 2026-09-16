@@ -20,3 +20,9 @@
 
 SELECT * FROM accounts
 Where accounts.balance > 2000000
+
+SELECT * from accounts
+WHERE accounts.balance > 2000000 and (
+    accounts.customer_name LIKE '%A%'
+    OR accounts.customer_name LIKE '%C%'
+  );
