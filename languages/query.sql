@@ -42,3 +42,14 @@ where balance >= 2000000
 
 select min(balance) as min_balance, max(balance) as max_balance from accounts
 where balance >= 2000000
+
+
+SELECT 
+  CASE
+      WHEN balance < 2000000 THEN 'LOW'
+      WHEN balance >= 2000000 THEN 'HIGH'
+      ELSE 'Zero'
+  END as balance_group,
+  Count(*) as total_customers
+from accounts
+GROUP BY balance_group
