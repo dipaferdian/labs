@@ -63,3 +63,14 @@ SELECT
   SUM(balance) as total_balance
 from accounts
 GROUP BY balance_group
+
+
+SELECT 
+  CASE
+      WHEN balance < 2000000 THEN 'LOW'
+      WHEN balance >= 2000000 THEN 'HIGH'
+      ELSE 'Zero'
+  END as balance_group,
+  AVG(balance) as average_balance
+from accounts
+GROUP BY balance_group
