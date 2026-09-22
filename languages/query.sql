@@ -84,3 +84,11 @@ from accounts
 WHERE balance >= 1000000
 GROUP BY balance_group
 HAVING COUNT(id) > 3
+
+
+SELECT 
+ account_type,
+ SUM(balance) as total_balances,
+ count(id) as total_customers
+from accounts
+GROUP BY account_type
