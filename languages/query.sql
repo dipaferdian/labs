@@ -77,11 +77,10 @@ GROUP BY balance_group
 
 SELECT 
   CASE
-      WHEN balance < 2000000 THEN 'LOW'
-      WHEN balance >= 2000000 THEN 'HIGH'
-      ELSE 'Zero'
+      WHEN balance >= 1000000 THEN 'HIGH'
   END as balance_group,
-    COUNT(id)
+    COUNT(id) as total_customers
 from accounts
+WHERE balance >= 1000000
 GROUP BY balance_group
-HAVING COUNT(id) > 4
+HAVING COUNT(id) > 3
