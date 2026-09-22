@@ -92,3 +92,12 @@ SELECT
  count(id) as total_customers
 from accounts
 GROUP BY account_type
+
+SELECT 
+  account_type,
+  count(id) total_customers,
+  sum(balance) total_balances
+from accounts
+where balance >= 1000000
+GROUP BY account_type
+HAVING SUM(balance) > 15000000
