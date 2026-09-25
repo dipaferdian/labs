@@ -141,14 +141,14 @@ order by total_balances desc
 
 
 SELECT 
-    COUNT(
+    SUM(
     CASE
-      WHEN balance >= 2000000 THEN 'high_balance_customers'
+      WHEN balance >= 2000000 THEN balance
     END
 ) as high_balance_customers,
-COUNT(
+SUM(
     CASE
-      WHEN balance < 2000000 THEN 'low_balance_customers'
+      WHEN balance < 2000000 THEN balance
     END
 ) as low_balance_customers
 from accounts
