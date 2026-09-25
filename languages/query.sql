@@ -270,3 +270,24 @@ HAVING AVG(
       WHEN balance >= 2000000 THEN balance
     END) > 4000000
 ORDER BY total_high_balance desc
+
+SELECT
+account_type,
+COUNT(
+    CASE
+      WHEN balance < 1000000 THEN 1
+    END
+) as low_customers,
+COUNT(
+    CASE
+      WHEN balance >= 1000000 AND balance < 5000000 THEN 1
+    END
+) as medium_customers,
+  COUNT(
+    CASE
+      WHEN balance >= 5000000 THEN 1
+    END
+) as high_customers
+from accounts
+GROUP BY account_type
+   
