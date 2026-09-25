@@ -312,3 +312,31 @@ SUM(
 from accounts
 GROUP BY account_type
 
+
+SELECT
+account_type,
+COUNT(
+    CASE
+      WHEN balance < 1000000 THEN 1
+    END
+) as low_customers,
+COUNT(
+    CASE
+      WHEN balance >= 1000000 AND balance < 5000000 THEN 1
+    END
+) as medium_customers,
+COUNT(
+    CASE
+      WHEN balance >= 5000000 THEN 1
+    END
+) as high_customers,
+COUNT(
+      CASE
+      WHEN balance < 1000000 THEN 1
+      WHEN balance >= 1000000 AND balance < 5000000 THEN 1
+      WHEN balance >= 5000000 THEN 1
+    END
+) as total_customers
+from accounts
+GROUP BY account_type
+
