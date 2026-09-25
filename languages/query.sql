@@ -228,3 +228,25 @@ HAVING SUM(
     CASE
       WHEN balance >= 2000000 THEN balance
     END) > 10000000
+
+
+SELECT
+account_type,
+    SUM(
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END
+) as total_high_balance,
+SUM(
+    CASE
+      WHEN balance < 2000000 THEN balance
+    END
+) as total_low_balance
+from accounts
+GROUP BY account_type
+HAVING SUM(    
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END) > 5000000
+ORDER BY total_high_balance desc
+   
