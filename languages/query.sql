@@ -250,3 +250,23 @@ HAVING SUM(
     END) > 5000000
 ORDER BY total_high_balance desc
    
+
+SELECT
+account_type,
+    AVG(
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END
+) as total_high_balance,
+AVG(
+    CASE
+      WHEN balance < 2000000 THEN balance
+    END
+) as total_low_balance
+from accounts
+GROUP BY account_type
+HAVING AVG(    
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END) > 4000000
+ORDER BY total_high_balance desc
