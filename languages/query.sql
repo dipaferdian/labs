@@ -127,10 +127,14 @@ GROUP BY account_type
 HAVING SUM(balance) > 15000000
 
 SELECT 
-  account_type,
+    CASE
+      WHEN balance < 2000000 THEN 'LOW'
+      WHEN balance >= 2000000 THEN 'HIGH'
+      ELSE 'Zero'
+  END as balance_group,
   count(id) total_customers,
   sum(balance) total_balances
 from accounts
-where balance >= 1000000
-GROUP BY account_type
+GROUP BY balance_group
+HAVING sum(balance) > 3000000
 order by total_balances desc
