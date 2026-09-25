@@ -179,3 +179,19 @@ AVG(
     END
 ) as low_balance_customers
 from accounts
+
+SELECT
+account_type,
+    COUNT(
+    CASE
+      WHEN balance >= 2000000 THEN 'high_balance_customers'
+    END
+) as high_balance_customers,
+COUNT(
+    CASE
+      WHEN balance < 2000000 THEN 'low_balance_customers'
+    END
+) as low_balance_customers
+from accounts
+GROUP BY account_type
+   
