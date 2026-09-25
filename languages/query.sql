@@ -152,3 +152,30 @@ COUNT(
     END
 ) as low_balance_customers
 from accounts
+
+SELECT 
+    sum(
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END
+) as high_balance_customers,
+sum(
+    CASE
+      WHEN balance < 2000000 THEN balance
+    END
+) as low_balance_customers
+from accounts
+
+
+SELECT 
+    avg(
+    CASE
+      WHEN balance >= 2000000 THEN balance
+    END
+) as high_balance_customers,
+AVG(
+    CASE
+      WHEN balance < 2000000 THEN balance
+    END
+) as low_balance_customers
+from accounts
