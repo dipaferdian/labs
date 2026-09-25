@@ -291,3 +291,24 @@ COUNT(
 from accounts
 GROUP BY account_type
    
+
+SELECT
+account_type,
+SUM(
+    CASE
+      WHEN balance < 1000000 THEN balance
+    END
+) as low_balance_total,
+SUM(
+    CASE
+      WHEN balance >= 1000000 AND balance < 5000000 THEN balance
+    END
+) as medium_balance_total,
+  SUM(
+    CASE
+      WHEN balance >= 5000000 THEN balance
+    END
+) as high_balance_total
+from accounts
+GROUP BY account_type
+
