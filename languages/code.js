@@ -1,35 +1,37 @@
-function code(nums) {
-  let max = 0;
-  let currentElement = -Infinity;
-  let count = 0;
+function compute(nums) {
+  let zeroIndexAt = -1;
 
   for (let index = 0; index < nums.length; index++) {
     const element = nums[index];
 
-    if (element > currentElement) {
-      currentElement = element;
-      count += 1;
+    if (element == 0 && zeroIndexAt == -1) {
+      zeroIndexAt = index;
+    }
 
-      max = Math.max(max, count);
-    } else {
-      currentElement = element;
-      count = 1;
+    if (element != 0 && zeroIndexAt != -1) {
+      const temporary = element;
 
-      max = Math.max(max, count);
+      nums[index] = 0;
+      nums[zeroIndexAt] = temporary;
+
+      zeroIndexAt += 1;
     }
   }
 
-  return max;
+  return nums;
 }
 
-console.log(compute([1, 2, 3, 2, 3, 4, 5])); // 4
+console.log(compute([0, 1, 0, 3, 12]));
+// [1, 3, 12, 0, 0]
 
-console.log(compute([1, 2, 2, 3, 4])); // 3
+console.log(compute([0, 0, 1]));
+// [1, 0, 0]
 
-console.log(compute([5, 4, 3, 2, 1])); // 1
+console.log(compute([1, 2, 3]));
+// [1, 2, 3]
 
-console.log(compute([1, 2, 3, 4, 5])); // 5
+console.log(compute([0, 0, 0]));
+// [0, 0, 0]
 
-console.log(compute([5])); // 1
-
-console.log(compute([-3, -2, -1, -5, -4])); // 3
+console.log(compute([4, 0, 5, 0, 2]));
+// [4, 5, 2, 0, 0]
