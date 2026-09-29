@@ -1,34 +1,33 @@
-function compute(array) {
-  let currentElement = undefined;
-  let newArray = [];
+function compute(string) {
+  const filtering = string.replace(/[^a-zA-Z]/g, "");
+  let left = 0;
+  let right = filtering.length - 1;
 
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index];
+  while (left < right) {
+    if (filtering[left].toLowerCase() != filtering[right].toLowerCase())
+      return false;
 
-    if (currentElement == undefined) {
-      currentElement = element;
-
-      newArray.push(element);
-    } else {
-      if (currentElement != element) {
-        currentElement = element;
-
-        newArray.push(element);
-      }
-    }
+    left++;
+    right--;
   }
 
-  return newArray;
+  return true;
 }
 
-console.log(compute([0, 0, 1, 1, 2, 2]));
-// [1, 2]
+console.log(compute("madam"));
+// true
 
-console.log(compute([0, 0, 1, 1, 2, 2, 3]));
-// [0, 1, 2, 3]
+console.log(compute("racecar"));
+// true
 
-console.log(compute([1, 2, 3]));
-// [1, 2, 3]
+console.log(compute("hello"));
+// false
 
-console.log(compute([1, 1, 1, 1]));
-[1];
+console.log(compute("A man, a plan, a canal: Panama"));
+// true
+
+console.log(compute("race a car"));
+// false
+
+console.log(compute("12321"));
+// true
