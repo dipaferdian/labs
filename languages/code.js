@@ -1,37 +1,34 @@
-function compute(nums) {
-  let zeroIndexAt = -1;
+function compute(array) {
+  let currentElement = undefined;
+  let newArray = [];
 
-  for (let index = 0; index < nums.length; index++) {
-    const element = nums[index];
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
 
-    if (element == 0 && zeroIndexAt == -1) {
-      zeroIndexAt = index;
-    }
+    if (currentElement == undefined) {
+      currentElement = element;
 
-    if (element != 0 && zeroIndexAt != -1) {
-      const temporary = element;
+      newArray.push(element);
+    } else {
+      if (currentElement != element) {
+        currentElement = element;
 
-      nums[index] = 0;
-      nums[zeroIndexAt] = temporary;
-
-      zeroIndexAt += 1;
+        newArray.push(element);
+      }
     }
   }
 
-  return nums;
+  return newArray;
 }
 
-console.log(compute([0, 1, 0, 3, 12]));
-// [1, 3, 12, 0, 0]
+console.log(compute([0, 0, 1, 1, 2, 2]));
+// [1, 2]
 
-console.log(compute([0, 0, 1]));
-// [1, 0, 0]
+console.log(compute([0, 0, 1, 1, 2, 2, 3]));
+// [0, 1, 2, 3]
 
 console.log(compute([1, 2, 3]));
 // [1, 2, 3]
 
-console.log(compute([0, 0, 0]));
-// [0, 0, 0]
-
-console.log(compute([4, 0, 5, 0, 2]));
-// [4, 5, 2, 0, 0]
+console.log(compute([1, 1, 1, 1]));
+[1];
