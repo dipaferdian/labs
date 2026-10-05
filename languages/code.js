@@ -1,33 +1,37 @@
-function compute(string) {
-  const filtering = string.replace(/[^a-zA-Z]/g, "");
-  let left = 0;
-  let right = filtering.length - 1;
+function compute(array1, array2) {
+  const mergeArray = [...array1, ...array2];
+  let currentIndex = -1;
 
-  while (left < right) {
-    if (filtering[left].toLowerCase() != filtering[right].toLowerCase())
-      return false;
+  if (array1.length < 1) return array2;
+  if (array2.length < 1) return array1;
 
-    left++;
-    right--;
+  for (let index = 0; index < mergeArray.length; index++) {
+    const element = mergeArray[index];
+
+    if (currentIndex == -1) {
+      currentIndex = index;
+    } else {
+      if (mergeArray[currentIndex] > element) {
+        const temporary = element;
+
+        mergeArray[index] = mergeArray[currentIndex];
+        mergeArray[currentIndex] = temporary;
+
+        currentIndex = index;
+      }
+    }
   }
-
-  return true;
+  return mergeArray;
 }
 
-console.log(compute("madam"));
-// true
+// console.log(compute([1, 3, 5], [2, 4, 6]));
+// // [1, 2, 3, 4, 5, 6]
 
-console.log(compute("racecar"));
-// true
+console.log(compute([1, 2, 7], [3, 4, 5]));
+// [1, 2, 3, 4, 5, 7]
 
-console.log(compute("hello"));
-// false
+// console.log(compute([], [1, 2, 3]));
+// // [1, 2, 3]
 
-console.log(compute("A man, a plan, a canal: Panama"));
-// true
-
-console.log(compute("race a car"));
-// false
-
-console.log(compute("12321"));
-// true
+// console.log(compute([1, 2], []));
+// // [1, 2]
