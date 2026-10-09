@@ -769,13 +769,7 @@
         "scope":{
             "advanced_mode":false,
             "exclude":[],
-            "include":[
-                {
-                    "enabled":true,
-                    "include_subdomains":true,
-                    "prefix":"klaviyo.com"
-                }
-            ]
+            "include":[]
         }
     }
 }
