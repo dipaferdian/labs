@@ -24,15 +24,9 @@ const server = http.createServer((req, res) => {
       return res.end("Origin not allowed");
     }
 
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS"
-    );
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, X-Lab-Header"
-    );
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Lab-Header");
 
     res.writeHead(204);
     return res.end();
@@ -41,7 +35,7 @@ const server = http.createServer((req, res) => {
   // Endpoint GET
   if (req.method === "GET" && req.url === "/api/hello") {
     res.writeHead(200, {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     });
 
     return res.end(
@@ -49,19 +43,21 @@ const server = http.createServer((req, res) => {
         message: "Hello from Node.js backend!",
         method: req.method,
         receivedOrigin: origin || null,
-        receivedHeader: req.headers["x-lab-header"] || null
-      })
+        receivedHeader: req.headers["x-lab-header"] || null,
+      }),
     );
   }
 
   // Endpoint tidak ditemukan
   res.writeHead(404, {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   });
 
-  res.end(JSON.stringify({
-    error: "Not Found"
-  }));
+  res.end(
+    JSON.stringify({
+      error: "Not Found",
+    }),
+  );
 });
 
 server.listen(PORT, HOST, () => {
