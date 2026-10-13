@@ -1,4 +1,5 @@
 const http = require("http");
+const crypto = require("crypto");
 
 const PORT = 7000;
 const APP_BASE_URL = "http://localhost:7000";
@@ -52,7 +53,9 @@ const server = http.createServer((req, res) => {
       // Menggunakan Host dari HTTP request.
       const host = req.headers.host;
 
-      resetUrl = `http://${host}/reset-password?email=${encodeURIComponent(data.email)}`;
+      const token = crypto.randomBytes(32).toString("hex");
+
+      resetUrl = `http://${host}/reset-password?email=${encodeURIComponent(data.email)}?token=${token}`;
 
       mode = "vulnerable";
     } else {
