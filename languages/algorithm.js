@@ -1,44 +1,22 @@
-function compute(array1, array2) {
-  if (array1.length < 1) return array2;
-  if (array2.length < 1) return array1;
-
+function compute(array, target) {
   let newArray = [];
-  let left = 0;
-  let right = 0;
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
 
-  while (left < array1.length && right < array2.length) {
-    if (array1[left] < array2[right]) {
-      newArray.push(array1[left]);
-
-      left++;
-    } else {
-      newArray.push(array2[right]);
-
-      right++;
-    }
-  }
-
-  while (left < array1.length) {
-    newArray.push(array1[left]);
-
-    left++;
-  }
-
-  while (right < array2.length) {
-    newArray.push(array2[right]);
-
-    right++;
+    if (element != target) newArray.push(element);
   }
 
   return newArray;
 }
 
-console.log(compute([1, 3, 5], [2, 4, 6]));
+console.log(compute([3, 2, 2, 3], 3));
+// [2, 2]
 
-console.log(compute([1, 2, 7], [3, 4, 5]));
+console.log(compute([1, 2, 3, 4, 5], 3));
+// [1, 2, 4, 5]
 
-console.log(compute([], [1, 2, 3]));
+console.log(compute([4, 4, 4], 4));
+// []
 
-console.log(compute([1, 2], []));
-
-console.log(compute([1, 2, 3], [4, 5, 6, 7, 8]));
+console.log(compute([1, 2, 3], 9));
+// [1, 2, 3]
