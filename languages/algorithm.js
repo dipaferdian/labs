@@ -6,13 +6,9 @@ function compute(array) {
     const element = array[index];
 
     maxNumber = Math.max(element, maxNumber);
-  }
 
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-
+    if (element > currentSecondMaxNumber) currentSecondMaxNumber = element;
     if (maxNumber != element) {
-      if (element > currentSecondMaxNumber) currentSecondMaxNumber = element;
     }
   }
 
