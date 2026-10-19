@@ -1,46 +1,114 @@
 function compute(array) {
-  let highNumber = -Infinity;
-  let lowNumber = -Infinity;
+  let firstNumber = -Infinity;
+  let secondNumber = -Infinity;
+  let thirdNumber = -Infinity;
+  let newArray = [];
+
+  if (array.length == 0) {
+    return [];
+  }
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
 
-    if (element >= highNumber) {
-      const temporary = highNumber;
-
-      if (highNumber != -Infinity && element != highNumber) {
-        lowNumber = temporary;
+    if (element > firstNumber) {
+      if (firstNumber > secondNumber && firstNumber != -Infinity) {
+        thirdNumber = secondNumber;
+        secondNumber = firstNumber;
       }
-
-      highNumber = element;
+      firstNumber = element;
     } else {
-      if (element > lowNumber) {
-        lowNumber = element;
+      if (element > secondNumber && element != firstNumber) {
+        thirdNumber = secondNumber;
+        secondNumber = element;
+      } else {
+        if (
+          element > thirdNumber &&
+          element != secondNumber &&
+          element != firstNumber
+        ) {
+          thirdNumber = element;
+        }
       }
     }
   }
 
-  if (lowNumber == -Infinity) return null;
+  if (firstNumber != -Infinity) {
+    newArray.push(firstNumber);
+  }
 
-  return lowNumber;
+  if (secondNumber != -Infinity) {
+    newArray.push(secondNumber);
+  }
+
+  if (thirdNumber != -Infinity) {
+    newArray.push(thirdNumber);
+  }
+
+  return newArray;
 }
 
-console.log(compute([10, 5, 8, 10, 3]));
-// 8
+// Test helper with colored output
+function test(input, expected) {
+  const result = compute(input);
+  const isCorrect = JSON.stringify(result) === JSON.stringify(expected);
 
-console.log(compute([1, 2, 3, 4]));
-// 3
+  const GREEN = "\x1b[32m";
+  const RED = "\x1b[31m";
+  const RESET = "\x1b[0m";
 
-console.log(compute([7, 7, 7]));
-// null
+  // console.log(
+  //   isCorrect ? `${GREEN}correct${RESET}` : `${RED}incorrect${RESET}`,
+  // );
 
-console.log(compute([-5, -2, -8]));
-// -5
+  // if (isCorrect) {
+  //   console.log(`Input:    ${JSON.stringify(input)}`);
+  //   console.log(`Expected: ${JSON.stringify(expected)}`);
+  //   console.log(`Actual:   ${JSON.stringify(result)}`);
 
-console.log(compute([4, 4, 2, 2]));
-// 2
+  //   console.log(`${GREEN}correct${RESET}`);
 
-console.log(compute([10, 10, 8]));
-// 8
+  //   console.log("--------------------");
+  // }
 
-console.log(compute([3, 2, 1]));
+  if (!isCorrect) {
+    console.log(`Input:    ${JSON.stringify(input)}`);
+    console.log(`Expected: ${JSON.stringify(expected)}`);
+    console.log(`Actual:   ${JSON.stringify(result)}`);
+
+    console.log(`${RED}incorrect${RESET}`);
+
+    console.log("--------------------");
+  }
+}
+
+// Basic cases
+test([4, 9, 2, 9, 7, 5, 7], [9, 7, 5]);
+test([1, 5, 3, 4, 2], [5, 4, 3]);
+test([8, 8, 6, 4], [8, 6, 4]);
+
+// Fewer than three distinct values
+test([10, 10, 5], [10, 5]);
+test([3, 3, 3], [3]);
+test([1, 2], [2, 1]);
+test([7], [7]);
+test([], []);
+
+// Negative numbers and zero
+test([-5, -2, -8, -2, -1], [-1, -2, -5]);
+test([0, -1, 3, 0, 2, 3], [3, 2, 0]);
+
+// Ascending and descending order
+test([5, 7, 9], [9, 7, 5]);
+test([9, 7, 5, 4], [9, 7, 5]);
+test([1, 2, 3], [3, 2, 1]);
+
+// Duplicate values in different positions
+test([9, 9, 7, 5], [9, 7, 5]);
+test([5, 5, 7, 7, 9, 9], [9, 7, 5]);
+test([9, 7, 9, 5, 7, 5], [9, 7, 5]);
+test([5, 4, 4, 4, 3, 3, 2], [5, 4, 3]);
+
+// Specific test cases
+test([5, 5, 5], [5]);
+test([1, 2, 3], [3, 2, 1]);
