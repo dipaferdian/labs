@@ -104,12 +104,12 @@ curl -NsS --fail-with-body \
   --connect-timeout 15 \
   --max-time 0 \
   -w '\n\n[HTTP Status: %{http_code}]\n[Content Type: %{content_type}]\n[Remote IP: %{remote_ip}]\n' \
-  --url 'https://gcp.api.snapchat.com/lens-studio-web-ailc/assistant/v1/conversations/events/06aca5c1-7da4-701d-8000-41ca4c7a1bb6?last_message_id=06aca761-2280-7629-8000-1ee33f3710ca' \
+  --url 'https://gcp.api.snapchat.com/lens-studio-web-ailc/assistant/v1/conversations/events/06ad6445-24fd-704d-8000-1bd4841e855d' \
   -H 'accept: text/event-stream' \
   -H 'accept-language: en-US,en;q=0.9,id;q=0.8' \
-  -H 'authorization: Bearer hCgwKCjE3OTA1NTcyMTASuQFYuFFe-aw0kNcMGAXNT6VSPEQnFskAczpaKi2jUglxSUHVI0EGve-98yKF4fGwGbV_5tiWX4WY20touCW4JyXoIkNYlBFE52LZmUUXN7Nb2vG5iQVZKEXPBPXmkiRDl-zQMeuKFmicQYma7BVGv_Bg1Nsa4K2zKpL3mbNCa4gA6i7phlkm0kf5eidUMxpONNZxiL7jh191zs0pCwo3U8MU8brxjc7WY6t_cEcM4jELcWGjc6oiJEdUUg' \
+  -H 'authorization: Bearer hCgwKCjE3OTExNjIwMTASuQFz09Y2CIwkd3chA04kSFH91gu4yYH7tDZ3tOwBZSr4F7g7PMJZraGU8Hxt_rq6CyKTn1lAatGFbk6CCezcBK7VUcYomgyHudaGiO6bzPxX73okcTYZqyew91vzjgzPC5-ZpOYVX8dBxsrOAgWnJReSquF1A4w8n54VzNh9My4WxWBE0HL8EKwsY7iW7QtnAGF76TsNAY9YbBCsUWYgqRYzLOVkQ1432nb4ib435odmSsgslJFHUL7uWQ' \
   -H 'cache-control: no-cache' \
-  -b 'sc-cookies-accepted=true; EssentialSession=true; Preferences=true; Performance=true; Marketing=true; blizzard_client_id=f3c234c8-c107-42f8-9460-eb61d460f398:1790439162850; _gcl_au=1.1.169116524.1790439163; sc-wcid=4ea83d85-b64c-4e9a-885f-81925d411918; sc-language=en-US; _scid=rpOiRILENQxgZv-kEcc-Yb2obtxtcBUf; _scid_r=vBOiRILENQxgZv-kEcc-Yb2obtxtcBUf3L9LpQ; sc_at=v2|H4sIAAAAAAAA/03GwREAIQgEsIqYEURh7UZEqrD4+15e2dr5Zl2CS5KKBEHsUC+cjOGI0sfaFht4THW392v7APYEUfdAAAAA; _sctr=1%7C1791478800000; _ga=GA1.1.788716378.1790439163; _ga_DPDHJB4310=GS2.1.s1791566792$o1$g1$t1791566931$j60$l0$h0; sc-a-nonce=0b4cbb4c-4bab-4a26-a6de-2d80dec39c0b; sc-dweb-allocation=19; blizzard_web_session_id=KSnQMtX5snL6kq+M; _ga_D2YQCD9KF4=GS2.1.s1791644855$o4$g1$t1791658363$j60$l0$h0' \
+  -b 'sc-cookies-accepted=true; EssentialSession=true; Preferences=true; Performance=true; Marketing=true; blizzard_client_id=f3c234c8-c107-42f8-9460-eb61d460f398:1790439162850; _gcl_au=1.1.169116524.1790439163; sc-wcid=4ea83d85-b64c-4e9a-885f-81925d411918; sc-language=en-US; _scid=rpOiRILENQxgZv-kEcc-Yb2obtxtcBUf; _scid_r=vBOiRILENQxgZv-kEcc-Yb2obtxtcBUf3L9LpQ; sc_at=v2|H4sIAAAAAAAA/03GwREAIQgEsIqYEURh7UZEqrD4+15e2dr5Zl2CS5KKBEHsUC+cjOGI0sfaFht4THW392v7APYEUfdAAAAA; _sctr=1%7C1791478800000; sc-dweb-allocation=19; _ga_KKNBL4WWPH=GS2.1.s1791820296$o2$g0$t1791820296$j60$l0$h0; sc-a-nonce=932c720c-f037-4693-94ab-a0e42d5babbb; blizzard_web_session_id=XaNMMq1DQiSkNrOg; _gid=GA1.2.173262143.1792426436; _ga_DPDHJB4310=GS2.1.s1792426435$o5$g1$t1792426551$j8$l0$h0; _ga=GA1.1.788716378.1790439163; _ga_QB5Z5X9KGR=GS2.1.s1792426108$o2$g1$t1792427017$j30$l0$h0; _ga_D2YQCD9KF4=GS2.1.s1792424901$o8$g1$t1792428486$j51$l0$h0' \
   -H 'origin: https://easylens.snapchat.com' \
   -H 'pragma: no-cache' \
   -H 'priority: u=1, i' \
