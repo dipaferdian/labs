@@ -1,51 +1,92 @@
-function compute(array) {
-  let firstNumber = -Infinity;
-  let secondNumber = -Infinity;
-  let thirdNumber = -Infinity;
-  let newArray = [];
-
-  if (array.length == 0) {
-    return [];
-  }
+function compute(array, k) {
+  let set = new Set();
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
 
-    if (element > firstNumber) {
-      if (firstNumber > secondNumber && firstNumber != -Infinity) {
-        thirdNumber = secondNumber;
-        secondNumber = firstNumber;
-      }
-      firstNumber = element;
-    } else {
-      if (element > secondNumber && element != firstNumber) {
-        thirdNumber = secondNumber;
-        secondNumber = element;
-      } else {
-        if (
-          element > thirdNumber &&
-          element != secondNumber &&
-          element != firstNumber
-        ) {
-          thirdNumber = element;
+    set.add(element);
+  }
+
+  const cleanDuplicate = [...set.values()];
+
+  if (cleanDuplicate.length < k) return null;
+
+  for (let i = 0; i < cleanDuplicate.length; i++) {
+    let element = cleanDuplicate[i];
+    for (let j = 0; j < cleanDuplicate.length; j++) {
+      let subelement = cleanDuplicate[j];
+
+      if (element != subelement) {
+        if (subelement < element) {
+          const temporary = cleanDuplicate[i];
+
+          cleanDuplicate[j] = temporary;
+          cleanDuplicate[i] = subelement;
+
+          element = cleanDuplicate[j];
         }
       }
     }
   }
 
-  if (firstNumber != -Infinity) {
-    newArray.push(firstNumber);
+  return cleanDuplicate[k - 1];
+}
+
+// Verify descending order across all permutations
+function verifySorting() {
+  const arrays = [
+    [1, 2, 3, 4],
+    [1, 3, 2, 4],
+    [2, 4, 1, 3],
+    [4, 3, 2, 1],
+    [3, 1, 4, 2],
+  ];
+
+  for (const array of arrays) {
+    const unique = [...new Set(array)];
+    const result = compute(array, 1);
+
+    const expected = Math.max(...unique);
+
+    if (result !== expected) {
+      console.log({
+        array,
+        expected,
+        actual: result,
+      });
+    }
+  }
+}
+
+verifySorting();
+
+function generateArrays(array, length, values, callback) {
+  if (array.length === length) {
+    callback([...array]);
+    return;
   }
 
-  if (secondNumber != -Infinity) {
-    newArray.push(secondNumber);
+  for (const value of values) {
+    array.push(value);
+    generateArrays(array, length, values, callback);
+    array.pop();
   }
+}
 
-  if (thirdNumber != -Infinity) {
-    newArray.push(thirdNumber);
-  }
+// Exhaustively test arrays of lengths 0 through 5.
+const values = [-1, 0, 1];
 
-  return newArray;
+for (let length = 0; length <= 5; length++) {
+  generateArrays([], length, values, (array) => {
+    const uniqueDescending = [...new Set(array)].sort((a, b) => b - a);
+
+    // Test every valid k and one k beyond the available distinct values.
+    for (let k = 1; k <= uniqueDescending.length + 1; k++) {
+      const expected = uniqueDescending[k - 1] ?? null;
+
+      test2(array, k, expected);
+    }
+  });
 }
 
 // Test helper with colored output
@@ -82,65 +123,78 @@ function test(input, expected) {
   }
 }
 
+// Test helper: print only incorrect results
+function test2(array, k, expected) {
+  const result = compute(array, k);
+  const isCorrect = JSON.stringify(result) === JSON.stringify(expected);
+
+  if (!isCorrect) {
+    const RED = "\x1b[31m";
+    const RESET = "\x1b[0m";
+
+    console.log(`Input:    ${JSON.stringify({ array, k })}`);
+    console.log(`Expected: ${JSON.stringify(expected)}`);
+    console.log(`Actual:   ${JSON.stringify(result)}`);
+    console.log(`${RED}incorrect${RESET}`);
+    console.log("--------------------");
+  }
+}
+
 // Basic cases
-test([4, 9, 2, 9, 7, 5, 7], [9, 7, 5]);
-test([1, 5, 3, 4, 2], [5, 4, 3]);
-test([8, 8, 6, 4], [8, 6, 4]);
+test2([4, 9, 2, 9, 7, 5, 7], 1, 9);
+test2([4, 9, 2, 9, 7, 5, 7], 2, 7);
+test2([4, 9, 2, 9, 7, 5, 7], 3, 5);
+test2([4, 9, 2, 9, 7, 5, 7], 4, 4);
+test2([4, 9, 2, 9, 7, 5, 7], 5, 2);
+test2([10, 2, 8, 6, 4], 2, 8);
 
-// Fewer than three distinct values
-test([10, 10, 5], [10, 5]);
-test([3, 3, 3], [3]);
-test([1, 2], [2, 1]);
-test([7], [7]);
-test([], []);
+// Duplicates
+test2([8, 8, 6, 4], 1, 8);
+test2([8, 8, 6, 4], 2, 6);
+test2([8, 8, 6, 4], 3, 4);
+test2([3, 3, 3], 1, 3);
 
-// Negative numbers and zero
-test([-5, -2, -8, -2, -1], [-1, -2, -5]);
-test([0, -1, 3, 0, 2, 3], [3, 2, 0]);
-
-// Ascending and descending order
-test([5, 7, 9], [9, 7, 5]);
-test([9, 7, 5, 4], [9, 7, 5]);
-test([1, 2, 3], [3, 2, 1]);
-
-// Duplicate values in different positions
-test([9, 9, 7, 5], [9, 7, 5]);
-test([5, 5, 7, 7, 9, 9], [9, 7, 5]);
-test([9, 7, 9, 5, 7, 5], [9, 7, 5]);
-test([5, 4, 4, 4, 3, 3, 2], [5, 4, 3]);
-
-// Specific test cases
-test([5, 5, 5], [5]);
-test([1, 2, 3], [3, 2, 1]);
-
-// Edge cases
-test([], []);
-test([5], [5]);
-test([5, 5, 5], [5]);
-test([1, 2], [2, 1]);
-test([1, 2, 3], [3, 2, 1]);
-test([-5, -2, -8, -2, -1], [-1, -2, -5]);
-test([3, 1, 2, 3, 2, 1], [3, 2, 1]);
-test([7, 9, 8, 10], [10, 9, 8]);
-test([10, 9, 8, 7], [10, 9, 8]);
-test([8, 7, 9, 10], [10, 9, 8]);
-test([2, 2, 3, 1, 3, 4], [4, 3, 2]);
-
-// Edge cases
-test([], []);
-test([5], [5]);
-test([5, 5, 5], [5]);
-test([1, 2], [2, 1]);
-test([1, 2, 3], [3, 2, 1]);
+// Not enough distinct values
+test2([8, 8, 6], 3, null);
+test2([5, 5, 5], 2, null);
+test2([], 1, null);
 
 // Negative numbers
-test([-5, -2, -8, -2, -1], [-1, -2, -5]);
-
-// Duplicates in different positions
-test([3, 1, 2, 3, 2, 1], [3, 2, 1]);
-test([2, 2, 3, 1, 3, 4], [4, 3, 2]);
+test2([-5, -2, -8, -2, -1], 1, -1);
+test2([-5, -2, -8, -2, -1], 2, -2);
+test2([-5, -2, -8, -2, -1], 3, -5);
+test2([-5, -2, -8, -2, -1], 4, -8);
+test2([-5, -2, -8, -2, -1], 5, null);
 
 // Different input orders
-test([7, 9, 8, 10], [10, 9, 8]);
-test([10, 9, 8, 7], [10, 9, 8]);
-test([8, 7, 9, 10], [10, 9, 8]);
+test2([1, 2, 3, 4], 2, 3);
+test2([4, 3, 2, 1], 2, 3);
+test2([2, 4, 1, 3], 3, 2);
+
+// Zero and negative values
+test2([0, -1, 5, 0, 3], 1, 5);
+test2([0, -1, 5, 0, 3], 2, 3);
+test2([0, -1, 5, 0, 3], 3, 0);
+test2([0, -1, 5, 0, 3], 4, -1);
+
+// Mixed input order
+test2([3, 1, 4, 2], 1, 4);
+test2([3, 1, 4, 2], 2, 3);
+test2([3, 1, 4, 2], 3, 2);
+test2([3, 1, 4, 2], 4, 1);
+
+// Verify all positions for different input orders
+test2([1, 2, 3, 4], 1, 4);
+test2([1, 2, 3, 4], 2, 3);
+test2([1, 2, 3, 4], 3, 2);
+test2([1, 2, 3, 4], 4, 1);
+
+test2([2, 4, 1, 3], 1, 4);
+test2([2, 4, 1, 3], 2, 3);
+test2([2, 4, 1, 3], 3, 2);
+test2([2, 4, 1, 3], 4, 1);
+
+test2([4, 3, 2, 1], 1, 4);
+test2([4, 3, 2, 1], 2, 3);
+test2([4, 3, 2, 1], 3, 2);
+test2([4, 3, 2, 1], 4, 1);
