@@ -1,92 +1,63 @@
 function compute(array, k) {
-  let set = new Set();
+  let map = new Map();
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
 
-    set.add(element);
+    if (map.has(element)) {
+      const add_count = map.get(element) + 1;
+
+      map.set(element, add_count);
+    } else {
+      map.set(element, 1);
+    }
   }
 
-  const cleanDuplicate = [...set.values()];
+  if (map.size < k) return null;
 
-  if (cleanDuplicate.length < k) return null;
+  let count_map = map.size;
+  let max_value = -Infinity;
+  let current_key = undefined;
+  let new_array = [];
 
-  for (let i = 0; i < cleanDuplicate.length; i++) {
-    let element = cleanDuplicate[i];
-    for (let j = 0; j < cleanDuplicate.length; j++) {
-      let subelement = cleanDuplicate[j];
+  while (count_map != 0) {
+    for (const [key, value] of map) {
+      if (max_value === -Infinity) {
+        max_value = value;
+        current_key = key;
+      } else {
+        if (value > max_value) {
+          max_value = value;
+          current_key = key;
+        }
 
-      if (element != subelement) {
-        if (subelement < element) {
-          const temporary = cleanDuplicate[i];
-
-          cleanDuplicate[j] = temporary;
-          cleanDuplicate[i] = subelement;
-
-          element = cleanDuplicate[j];
+        if (value === max_value) {
+          if (current_key > key) {
+            max_value = value;
+            current_key = key;
+          }
         }
       }
     }
+
+    new_array.push(current_key);
+    map.delete(current_key);
+
+    max_value = -Infinity;
+    current_key = undefined;
+
+    count_map = map.size;
   }
 
-  return cleanDuplicate[k - 1];
-}
+  let result = [];
 
-// Verify descending order across all permutations
-function verifySorting() {
-  const arrays = [
-    [1, 2, 3, 4],
-    [1, 3, 2, 4],
-    [2, 4, 1, 3],
-    [4, 3, 2, 1],
-    [3, 1, 4, 2],
-  ];
+  for (let index = 0; index < k; index++) {
+    const element = new_array[index];
 
-  for (const array of arrays) {
-    const unique = [...new Set(array)];
-    const result = compute(array, 1);
-
-    const expected = Math.max(...unique);
-
-    if (result !== expected) {
-      console.log({
-        array,
-        expected,
-        actual: result,
-      });
-    }
-  }
-}
-
-verifySorting();
-
-function generateArrays(array, length, values, callback) {
-  if (array.length === length) {
-    callback([...array]);
-    return;
+    result.push(element);
   }
 
-  for (const value of values) {
-    array.push(value);
-    generateArrays(array, length, values, callback);
-    array.pop();
-  }
-}
-
-// Exhaustively test arrays of lengths 0 through 5.
-const values = [-1, 0, 1];
-
-for (let length = 0; length <= 5; length++) {
-  generateArrays([], length, values, (array) => {
-    const uniqueDescending = [...new Set(array)].sort((a, b) => b - a);
-
-    // Test every valid k and one k beyond the available distinct values.
-    for (let k = 1; k <= uniqueDescending.length + 1; k++) {
-      const expected = uniqueDescending[k - 1] ?? null;
-
-      test2(array, k, expected);
-    }
-  });
+  return result;
 }
 
 // Test helper with colored output
@@ -139,62 +110,82 @@ function test2(array, k, expected) {
     console.log("--------------------");
   }
 }
-
 // Basic cases
-test2([4, 9, 2, 9, 7, 5, 7], 1, 9);
-test2([4, 9, 2, 9, 7, 5, 7], 2, 7);
-test2([4, 9, 2, 9, 7, 5, 7], 3, 5);
-test2([4, 9, 2, 9, 7, 5, 7], 4, 4);
-test2([4, 9, 2, 9, 7, 5, 7], 5, 2);
-test2([10, 2, 8, 6, 4], 2, 8);
+test2([1, 1, 1, 2, 2, 3], 2, [1, 2]);
+test2([5, 5, 3, 3, 3, 8, 8, 8, 8], 2, [8, 3]);
+test2([4, 4, 4, 2, 2, 1], 2, [4, 2]);
+test2([7, 7, 8], 2, [7, 8]);
 
-// Duplicates
-test2([8, 8, 6, 4], 1, 8);
-test2([8, 8, 6, 4], 2, 6);
-test2([8, 8, 6, 4], 3, 4);
-test2([3, 3, 3], 1, 3);
+// Equal frequencies: smaller number comes first
+test2([4, 4, 1, 1, 2, 2], 2, [1, 2]);
+test2([3, 3, 1, 1, 2, 2], 3, [1, 2, 3]);
+test2([9, 9, 5, 5], 2, [5, 9]);
 
-// Not enough distinct values
-test2([8, 8, 6], 3, null);
+// Different input orders
+test2([3, 1, 3, 2, 1, 3], 2, [3, 1]);
+test2([2, 3, 1, 2, 3, 1], 2, [1, 2]);
+test2([8, 5, 8, 5, 8, 3], 2, [8, 5]);
+
+// Single distinct number
+test2([4, 4, 4], 1, [4]);
+test2([7, 7, 7, 7], 1, [7]);
+
+// Not enough distinct numbers
+test2([1, 1, 2, 2], 3, null);
 test2([5, 5, 5], 2, null);
 test2([], 1, null);
 
 // Negative numbers
-test2([-5, -2, -8, -2, -1], 1, -1);
-test2([-5, -2, -8, -2, -1], 2, -2);
-test2([-5, -2, -8, -2, -1], 3, -5);
-test2([-5, -2, -8, -2, -1], 4, -8);
-test2([-5, -2, -8, -2, -1], 5, null);
-
-// Different input orders
-test2([1, 2, 3, 4], 2, 3);
-test2([4, 3, 2, 1], 2, 3);
-test2([2, 4, 1, 3], 3, 2);
+test2([-1, -1, -1, -2, -2, -3], 2, [-1, -2]);
+test2([-5, -5, -2, -2, -8, -8], 2, [-8, -5]);
+test2([-3, -3, -1, -1, -2, -2], 3, [-3, -2, -1]);
 
 // Zero and negative values
-test2([0, -1, 5, 0, 3], 1, 5);
-test2([0, -1, 5, 0, 3], 2, 3);
-test2([0, -1, 5, 0, 3], 3, 0);
-test2([0, -1, 5, 0, 3], 4, -1);
+test2([0, 0, -1, -1, 2, 2, 2], 2, [2, -1]);
+test2([0, 0, -1, -1, 1, 1], 3, [-1, 0, 1]);
 
-// Mixed input order
-test2([3, 1, 4, 2], 1, 4);
-test2([3, 1, 4, 2], 2, 3);
-test2([3, 1, 4, 2], 3, 2);
-test2([3, 1, 4, 2], 4, 1);
+// K equals the number of distinct values
+test2([4, 4, 2, 2, 1], 3, [2, 4, 1]);
+test2([3, 1, 2], 3, [1, 2, 3]);
 
-// Verify all positions for different input orders
-test2([1, 2, 3, 4], 1, 4);
-test2([1, 2, 3, 4], 2, 3);
-test2([1, 2, 3, 4], 3, 2);
-test2([1, 2, 3, 4], 4, 1);
+// Frequency priority
+test2([1, 1, 1, 2, 2, 3], 2, [1, 2]);
+test2([5, 5, 3, 3, 3, 8, 8, 8, 8], 2, [8, 3]);
 
-test2([2, 4, 1, 3], 1, 4);
-test2([2, 4, 1, 3], 2, 3);
-test2([2, 4, 1, 3], 3, 2);
-test2([2, 4, 1, 3], 4, 1);
+// Equal frequencies
+test2([4, 4, 1, 1, 2, 2], 2, [1, 2]);
+test2([4, 4, 2, 2, 1], 3, [2, 4, 1]);
 
-test2([4, 3, 2, 1], 1, 4);
-test2([4, 3, 2, 1], 2, 3);
-test2([4, 3, 2, 1], 3, 2);
-test2([4, 3, 2, 1], 4, 1);
+// Not enough distinct values
+test2([1, 1, 2, 2], 3, null);
+test2([], 1, null);
+
+// Negative numbers
+test2([-3, -3, -1, -1, -2, -2], 3, [-3, -2, -1]);
+
+// Different frequencies
+test2([1, 1, 2, 2, 2, 3, 3, 4], 3, [2, 1, 3]);
+test2([6, 6, 6, 2, 2, 4, 4, 4, 4], 2, [4, 6]);
+test2([9, 8, 9, 8, 9, 7, 7, 6], 3, [9, 7, 8]);
+
+// Equal frequencies: smaller number comes first
+test2([5, 3, 1, 5, 3, 1], 2, [1, 3]);
+test2([10, 20, 30, 20, 30, 10], 3, [10, 20, 30]);
+test2([-4, -2, -4, -2, -6, -6], 3, [-6, -4, -2]);
+
+// Zero and negative numbers
+test2([0, 0, 0, -1, -1, 2, 2], 2, [0, -1]);
+test2([-5, -5, -5, -1, -1, -3, -3, -3], 2, [-5, -3]);
+
+// Different input orders, same frequencies
+test2([3, 2, 1, 3, 2, 1], 2, [1, 2]);
+test2([8, 4, 6, 8, 4, 6, 8], 3, [8, 4, 6]);
+
+// K boundary cases
+test2([3, 3, 2, 2, 1, 1], 1, [1]);
+test2([3, 3, 2, 2, 1, 1], 3, [1, 2, 3]);
+test2([5, 5, 4, 4], 2, [4, 5]);
+
+// Not enough distinct numbers
+test2([7, 7, 7, 7], 2, null);
+test2([], 3, null);
