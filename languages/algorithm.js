@@ -110,82 +110,70 @@ function test2(array, k, expected) {
     console.log("--------------------");
   }
 }
+
 // Basic cases
-test2([1, 1, 1, 2, 2, 3], 2, [1, 2]);
-test2([5, 5, 3, 3, 3, 8, 8, 8, 8], 2, [8, 3]);
-test2([4, 4, 4, 2, 2, 1], 2, [4, 2]);
-test2([7, 7, 8], 2, [7, 8]);
+test2(["apple", "banana", "apple", "orange", "banana", "apple"], 2, [
+  "apple",
+  "banana",
+]);
+test2(["cat", "dog", "cat", "dog", "bird"], 2, ["cat", "dog"]);
 
-// Equal frequencies: smaller number comes first
-test2([4, 4, 1, 1, 2, 2], 2, [1, 2]);
-test2([3, 3, 1, 1, 2, 2], 3, [1, 2, 3]);
-test2([9, 9, 5, 5], 2, [5, 9]);
-
-// Different input orders
-test2([3, 1, 3, 2, 1, 3], 2, [3, 1]);
-test2([2, 3, 1, 2, 3, 1], 2, [1, 2]);
-test2([8, 5, 8, 5, 8, 3], 2, [8, 5]);
-
-// Single distinct number
-test2([4, 4, 4], 1, [4]);
-test2([7, 7, 7, 7], 1, [7]);
-
-// Not enough distinct numbers
-test2([1, 1, 2, 2], 3, null);
-test2([5, 5, 5], 2, null);
-test2([], 1, null);
-
-// Negative numbers
-test2([-1, -1, -1, -2, -2, -3], 2, [-1, -2]);
-test2([-5, -5, -2, -2, -8, -8], 2, [-8, -5]);
-test2([-3, -3, -1, -1, -2, -2], 3, [-3, -2, -1]);
-
-// Zero and negative values
-test2([0, 0, -1, -1, 2, 2, 2], 2, [2, -1]);
-test2([0, 0, -1, -1, 1, 1], 3, [-1, 0, 1]);
-
-// K equals the number of distinct values
-test2([4, 4, 2, 2, 1], 3, [2, 4, 1]);
-test2([3, 1, 2], 3, [1, 2, 3]);
-
-// Frequency priority
-test2([1, 1, 1, 2, 2, 3], 2, [1, 2]);
-test2([5, 5, 3, 3, 3, 8, 8, 8, 8], 2, [8, 3]);
-
-// Equal frequencies
-test2([4, 4, 1, 1, 2, 2], 2, [1, 2]);
-test2([4, 4, 2, 2, 1], 3, [2, 4, 1]);
-
-// Not enough distinct values
-test2([1, 1, 2, 2], 3, null);
-test2([], 1, null);
-
-// Negative numbers
-test2([-3, -3, -1, -1, -2, -2], 3, [-3, -2, -1]);
+// Alphabetical order when frequencies tie
+test2(["banana", "apple", "banana", "apple"], 2, ["apple", "banana"]);
+test2(["dog", "cat", "bird"], 3, ["bird", "cat", "dog"]);
 
 // Different frequencies
-test2([1, 1, 2, 2, 2, 3, 3, 4], 3, [2, 1, 3]);
-test2([6, 6, 6, 2, 2, 4, 4, 4, 4], 2, [4, 6]);
-test2([9, 8, 9, 8, 9, 7, 7, 6], 3, [9, 7, 8]);
+test2(["red", "blue", "red", "green", "blue", "red"], 3, [
+  "red",
+  "blue",
+  "green",
+]);
+test2(["zebra", "ant", "zebra", "bee", "ant"], 2, ["ant", "zebra"]);
 
-// Equal frequencies: smaller number comes first
-test2([5, 3, 1, 5, 3, 1], 2, [1, 3]);
-test2([10, 20, 30, 20, 30, 10], 3, [10, 20, 30]);
-test2([-4, -2, -4, -2, -6, -6], 3, [-6, -4, -2]);
+// Single unique word
+test2(["hello", "hello", "hello"], 1, ["hello"]);
 
-// Zero and negative numbers
-test2([0, 0, 0, -1, -1, 2, 2], 2, [0, -1]);
-test2([-5, -5, -5, -1, -1, -3, -3, -3], 2, [-5, -3]);
+// Not enough unique words
+test2(["apple", "apple", "banana"], 3, null);
+test2([], 1, null);
 
-// Different input orders, same frequencies
-test2([3, 2, 1, 3, 2, 1], 2, [1, 2]);
-test2([8, 4, 6, 8, 4, 6, 8], 3, [8, 4, 6]);
+// Different frequencies
+test2(["a", "b", "a", "c", "b", "a"], 2, ["a", "b"]);
+test2(["pear", "kiwi", "pear", "plum", "kiwi", "pear", "plum"], 3, [
+  "pear",
+  "kiwi",
+  "plum",
+]);
+test2(["x", "z", "y", "z", "y", "z"], 3, ["z", "y", "x"]);
+
+// Equal frequencies: alphabetical order
+test2(["dog", "ant", "cat", "dog", "ant", "cat"], 2, ["ant", "cat"]);
+test2(["mango", "apple", "banana", "mango", "apple", "banana"], 3, [
+  "apple",
+  "banana",
+  "mango",
+]);
+test2(["zoo", "yak", "ant", "bee"], 4, ["ant", "bee", "yak", "zoo"]);
+
+// Mixed frequencies and alphabetical ties
+test2(["pear", "apple", "banana", "apple", "pear", "banana", "pear"], 3, [
+  "pear",
+  "apple",
+  "banana",
+]);
+test2(["c", "a", "b", "a", "b", "c", "d"], 4, ["a", "b", "c", "d"]);
+test2(["orange", "kiwi", "apple", "kiwi", "orange", "apple", "kiwi"], 3, [
+  "kiwi",
+  "apple",
+  "orange",
+]);
 
 // K boundary cases
-test2([3, 3, 2, 2, 1, 1], 1, [1]);
-test2([3, 3, 2, 2, 1, 1], 3, [1, 2, 3]);
-test2([5, 5, 4, 4], 2, [4, 5]);
+test2(["cat", "cat", "dog", "bird"], 1, ["cat"]);
+test2(["cat", "cat", "dog", "bird"], 3, ["cat", "bird", "dog"]);
+test2(["pear", "apple", "pear", "apple"], 2, ["apple", "pear"]);
 
-// Not enough distinct numbers
-test2([7, 7, 7, 7], 2, null);
-test2([], 3, null);
+// Not enough unique words
+test2(["hi", "hi", "hello"], 3, null);
+test2(["same", "same", "same"], 2, null);
+test2([], 2, null);
