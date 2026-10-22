@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 const PORT = 3000;
 let requestCount = 0;
@@ -21,22 +22,43 @@ const server = http.createServer((req, res) => {
 
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  // API endpoint with browser caching enabled.
+  // API endpoint with cache validation.
   if (url.pathname === "/api/data" && req.method === "GET") {
     requestCount++;
 
     const data = {
       message: "Hello from Node.js server!",
-      serverTime: new Date().toISOString(),
-      serverRequestCount: requestCount,
+      // serverRequestCount: requestCount,
     };
+
+    const body = JSON.stringify(data);
+
+    // Generate an ETag from the response body.
+    const etag = `"${crypto.createHash("sha256").update(body).digest("hex")}"`;
+
+    console.log(`Request #${requestCount}`);
+    console.log("If-None-Match:", req.headers["if-none-match"]);
+
+    // Check whether the cached response is still valid.
+    if (req.headers["if-none-match"] === etag) {
+      res.writeHead(304, {
+        "Cache-Control": "no-cache",
+        ETag: etag,
+      });
+
+      res.end();
+      console.log("Response: 304 Not Modified\n");
+      return;
+    }
 
     res.writeHead(200, {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, max-age=60",
+      "Cache-Control": "no-cache",
+      ETag: etag,
     });
 
-    res.end(JSON.stringify(data));
+    res.end(body);
+    console.log("Response: 200 OK\n");
     return;
   }
 
