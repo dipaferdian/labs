@@ -1,17 +1,59 @@
 function compute(array) {
+  if (array.length === 0) return 0;
+
   let set = new Set();
 
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
 
-    if (set.has(element)) {
-      return element;
-    } else {
-      set.add(element);
+    set.add(element);
+  }
+
+  array = Array.from(set.values());
+
+  for (let i = 0; i < array.length; i++) {
+    let element = array[i];
+
+    for (let j = 0; j < array.length; j++) {
+      let subelement = array[j];
+
+      if (element < subelement && element != subelement) {
+        const temporary = array[i];
+
+        array[j] = temporary;
+        array[i] = subelement;
+
+        element = array[j];
+      }
     }
   }
 
-  return null;
+  let addCount = undefined;
+  let sumCount = 0;
+  let maxCount = 0;
+
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+
+    if (addCount === undefined) {
+      addCount = element;
+      sumCount = 1;
+    }
+
+    if (element != addCount) {
+      if (element === addCount + 1) {
+        sumCount += 1;
+        addCount = element;
+      } else {
+        addCount = element;
+        sumCount = 1;
+      }
+    }
+
+    maxCount = Math.max(sumCount, maxCount);
+  }
+
+  return maxCount;
 }
 
 function test(array, expected) {
@@ -30,29 +72,15 @@ function test(array, expected) {
   }
 }
 
-test([4, 2, 7, 2, 4], 2);
-test([1, 3, 5, 7], null);
-test([8, 8, 6, 6], 8);
-test([3, 1, 3, 1], 3);
-test([-2, 4, -2, 5], -2);
-
-// Repeated element appears at the end.
-test([1, 2, 3, 4, 3], 3);
-
-// Multiple repeated elements.
-test([5, 1, 5, 1, 5], 5);
-
-// Repeated negative numbers.
-test([-3, -1, -3, -1], -3);
-
-// Single element.
-test([7], null);
-
-// Empty array.
-test([], null);
-
-// Zero is repeated.
-test([0, 1, 0, 2], 0);
-
-// First repeated element is not the smallest number.
-test([9, 4, 7, 4, 9], 4);
+test([100, 4, 200, 1, 3, 2], 4);
+test([1, 9, 3, 10, 2, 20], 3);
+test([5, 5, 5], 1);
+test([], 0);
+test([8, 7, 6, 5], 4);
+test([-2, -1, 0, 2, 3], 3);
+test([1], 1);
+test([1, 3, 5, 7], 1);
+test([1, 2, 0, 1], 3);
+test([-3, -2, -1, 0, 1], 5);
+test([10, 11, 12, 15, 16, 17, 18], 4);
+test([0, -1], 2);
