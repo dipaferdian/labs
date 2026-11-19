@@ -1,47 +1,53 @@
 function compute(str) {
-  let map = new Map();
+  let max_count = 0;
+  let max_char = null;
+  let current_count = 0;
+  let current_char = null;
 
   for (let index = 0; index < str.length; index++) {
     const element = str[index];
 
-    if (map.has(element)) {
-      const count = map.get(element) + 1;
-
-      map.set(element, count);
+    if (current_char === null) {
+      current_char = element;
+      current_count++;
     } else {
-      map.set(element, 1);
+      if (current_char === element) {
+        current_count++;
+      } else {
+        if (current_count > max_count) {
+          max_count = current_count;
+          max_char = current_char;
+        }
+
+        current_char = element;
+        current_count = 1;
+      }
     }
   }
 
-  if (map.size == 0) return null;
-
-  for (const [value, key] of map) {
-    if (key == 1) return value;
+  if (current_count > max_count) {
+    max_count = current_count;
+    max_char = current_char;
   }
 
-  return null;
+  return max_char;
 }
 
-console.log(compute("aab"));
-// b
+console.log(compute("aaabbbaaa"));
+// "a" — rangkaian pertama menang saat seri
 
-console.log(compute("aaab"));
-// b
+console.log(compute("abbbcc"));
+// ("b");
 
-console.log(compute("abbb"));
-// a
-
-console.log(compute("aabbcdd"));
+console.log(compute("aabccccdd"));
 // "c"
 
-console.log(compute("hello"));
-// "h"
+console.log(compute("abc"));
+// "a"
 
-console.log(compute("aabbcc"));
+console.log(compute(""));
 // null
 
-console.log(compute("programming"));
-// "p"
-
-console.log(compute("swiss"));
-// "w"
+console.log(compute("aaabbcccc"));
+// Expected: "c"
+// Actual: null
