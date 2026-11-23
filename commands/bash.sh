@@ -13,3 +13,12 @@ alias recon.sh="path/recon.sh"
 for i in `cat /home/alo-dipaferdian/works/personal/labs/hosts/subdomain.txt`; do
     curl $i/logo.png -o $i.png
 done
+
+# run curl by  changing host header with resolve and display response headers and body
+ip="51.158.147.132"
+host="admin.hackycorp.com"
+
+curl -k -i \
+    --resolve "www.hackycorp.com:443:$ip" \
+    -H "Host: $host" \
+    https://www.hackycorp.com/
