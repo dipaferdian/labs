@@ -22,3 +22,9 @@ curl -k -i \
     --resolve "www.hackycorp.com:443:$ip" \
     -H "Host: $host" \
     https://www.hackycorp.com/
+
+# loop curl request to balancer.hackycorp.com
+for i in $(seq 1 10); do
+    curl -i -X GET balancer.hackycorp.com
+    echo "----------------------------"
+done
