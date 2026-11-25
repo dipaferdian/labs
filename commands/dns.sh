@@ -37,3 +37,21 @@ sudo named-checkzone lab.test /etc/bind/db.lab.test
 
 # create configuration for unbound resolver
 sudo nano /etc/unbound/unbound.conf.d/local-resolver.conf
+
+# show dns resolver status
+resolvectl status
+
+# show ip address of network interface
+ip addr show wlp0s20f3
+
+# listen to DNS traffic on port 53
+sudo tcpdump -ni wlp0s20f3 'port 53'
+
+# check dns traffic on port 53 and udp protocol
+sudo tcpdump -ni wlp0s20f3 'udp port 53'
+
+# clear dns caches
+sudo resolvectl flush-caches
+
+# check dns resolution for google.com
+resolvectl query google.com
